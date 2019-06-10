@@ -1,9 +1,10 @@
 #ifndef DTCOMENTARIO_H
 #define DTCOMENTARIO_H
 #include <iostream>
+#include "../../colecciones/interfaces/ICollectible.h"
 using namespace std;
 
-class DtComentario{
+class DtComentario : public ICollectible{
     private:
         int ID;
         string texto;

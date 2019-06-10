@@ -1,9 +1,10 @@
 #ifndef DTPELICULA_H
 #define DTPELICULA_H
 #include <iostream>
+#include "../../colecciones/interfaces/ICollectible.h"
 using namespace std;
 
-class DtPelicula{
+class DtPelicula : public ICollectible{
     private:
         string titulo;
         string poster;

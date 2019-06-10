@@ -3,7 +3,9 @@
 #include <iostream>
 using namespace std;
 
-class DtSala{
+#include "../../colecciones/interfaces/ICollectible.h"
+
+class DtSala : public ICollectible{
     private:
         int numero;
         int capasidad;

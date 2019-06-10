@@ -2,9 +2,10 @@
 #define DTCINE_H
 #include "Direccion.h"
 #include <iostream>
+#include "../../colecciones/interfaces/ICollectible.h"
 using namespace std;
 
-class DtCine{
+class DtCine : public ICollectible{
     private:
         int ID;
         Direccion direccion;

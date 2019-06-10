@@ -2,9 +2,10 @@
 #define DTFUNCION_H
 #include "DateTime.h"
 #include <iostream>
+#include "../../colecciones/interfaces/ICollectible.h"
 using namespace std;
 
-class DtFuncion{
+class DtFuncion : public ICollectible{
     private:
         int ID;
         DateTime FechaYHora;
