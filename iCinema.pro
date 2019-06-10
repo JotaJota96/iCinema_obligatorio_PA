@@ -4,6 +4,19 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        colecciones/Integer.cpp \
+        colecciones/String.cpp \
+        colecciones/collections/List.cpp \
+        colecciones/collections/ListIterator.cpp \
+        colecciones/collections/ListNode.cpp \
+        colecciones/collections/OrderedDictionary.cpp \
+        colecciones/collections/OrderedDictionaryEntry.cpp \
+        colecciones/interfaces/ICollectible.cpp \
+        colecciones/interfaces/ICollection.cpp \
+        colecciones/interfaces/IDictionary.cpp \
+        colecciones/interfaces/IIterator.cpp \
+        colecciones/interfaces/IKey.cpp \
+        colecciones/interfaces/OrderedKey.cpp \
         datatypes/cpp/DateTime.cpp \
         datatypes/cpp/Direccion.cpp \
         datatypes/cpp/DtCine.cpp \
@@ -17,6 +30,19 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+	colecciones/Integer.h \
+	colecciones/String.h \
+	colecciones/collections/List.h \
+	colecciones/collections/ListIterator.h \
+	colecciones/collections/ListNode.h \
+	colecciones/collections/OrderedDictionary.h \
+	colecciones/collections/OrderedDictionaryEntry.h \
+	colecciones/interfaces/ICollectible.h \
+	colecciones/interfaces/ICollection.h \
+	colecciones/interfaces/IDictionary.h \
+	colecciones/interfaces/IIterator.h \
+	colecciones/interfaces/IKey.h \
+	colecciones/interfaces/OrderedKey.h \
 	datatypes/h/DateTime.h \
 	datatypes/h/Direccion.h \
 	datatypes/h/DtCine.h \
