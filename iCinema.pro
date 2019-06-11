@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        clases/cpp/Puntuacion.cpp \
         colecciones/Integer.cpp \
         colecciones/String.cpp \
         colecciones/collections/List.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+	clases/h/Puntuacion.h \
 	colecciones/Integer.h \
 	colecciones/String.h \
 	colecciones/collections/List.h \
