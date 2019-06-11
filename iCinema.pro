@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         clases/cpp/Puntuacion.cpp \
+        clases/cpp/Usuario.cpp \
         colecciones/Integer.cpp \
         colecciones/String.cpp \
         colecciones/collections/List.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
 	clases/h/Puntuacion.h \
+	clases/h/Usuario.h \
 	colecciones/Integer.h \
 	colecciones/String.h \
 	colecciones/collections/List.h \

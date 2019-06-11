@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef PUNTUACION_H
 #define PUNTUACION_H
+#include <iostream>
 using namespace std;
 
 #include "../../colecciones/interfaces/ICollectible.h"
