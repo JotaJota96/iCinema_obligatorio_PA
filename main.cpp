@@ -5,16 +5,15 @@ using namespace std;
 #include "colecciones/String.h"
 #include "clases/h/Usuario.h"
 #include "colecciones/collections/List.h"
-
+#include "clases/h/ReservaCredito.h"
+#include "clases/h/ReservaDebito.h"
 IDictionary *users;
 
 void cargarDatosDePrueba();
 
 
 int main(){
-    cargarDatosDePrueba();
-
-
+    //cargarDatosDePrueba();
 
     return 0;
 }
