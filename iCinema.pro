@@ -4,10 +4,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        clases/cpp/Cine.cpp \
         clases/cpp/Puntuacion.cpp \
         clases/cpp/Reserva.cpp \
         clases/cpp/ReservaCredito.cpp \
         clases/cpp/ReservaDebito.cpp \
+        clases/cpp/Sala.cpp \
         clases/cpp/Usuario.cpp \
         colecciones/Integer.cpp \
         colecciones/String.cpp \
@@ -35,10 +37,12 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+	clases/h/Cine.h \
 	clases/h/Puntuacion.h \
 	clases/h/Reserva.h \
 	clases/h/ReservaCredito.h \
 	clases/h/ReservaDebito.h \
+	clases/h/Sala.h \
 	clases/h/Usuario.h \
 	colecciones/Integer.h \
 	colecciones/String.h \

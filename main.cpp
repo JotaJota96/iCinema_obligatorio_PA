@@ -2,11 +2,14 @@
 using namespace std;
 
 #include "colecciones/collections/OrderedDictionary.h"
-#include "colecciones/String.h"
-#include "clases/h/Usuario.h"
 #include "colecciones/collections/List.h"
+#include "colecciones/String.h"
+
+#include "clases/h/Usuario.h"
 #include "clases/h/ReservaCredito.h"
 #include "clases/h/ReservaDebito.h"
+#include "clases/h/Cine.h"
+
 IDictionary *users;
 
 void cargarDatosDePrueba();
@@ -14,6 +17,8 @@ void cargarDatosDePrueba();
 
 int main(){
     //cargarDatosDePrueba();
+
+
 
     return 0;
 }
