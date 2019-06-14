@@ -122,8 +122,6 @@ ICollection* Comentario::obtenerSubComentarios(){ //set(DtComentario)
 void Comentario::eliminarComentarios(){
     IIterator* it = this->misSubComentarios->getIterator();
     while (it->hasCurrent()){
-        // en vez de hacer un puntero que apunte al it->getCurrent y luego a ese puntero hacerle un ->getDataType para despues hacerle add a la coleccion de retorno, mejor lo resumo todo en la siguiente linea: (que curiosamente es mucho mas corta que este comentario donde explico por que es mas corto hacerlo asi que de la manera que dije al principio de este comentario)
-        cout << "Eliminando " << ((Comentario*) it->getCurrent())->getTexto() << endl;
         static_cast<Comentario*>(it->getCurrent())->eliminarComentarios();
         delete it->getCurrent();
         it->next();

@@ -18,13 +18,18 @@ void OrderedDictionary::add(IKey *k, ICollectible *val){
     OrderedKey *key = dynamic_cast<OrderedKey *>(k);
     if(key == NULL)
         throw std::invalid_argument("Se esperaba un OrderedKey");
-    
+    if(val == NULL)
+        throw std::invalid_argument("val no puede ser NULL");
+
     OrderedDictionaryEntry *parent = NULL;
     ComparisonRes parentComparison;
     ComparisonRes comparision;
     
     for(OrderedDictionaryEntry *current = root; current != NULL;){
-        comparision = key->compare(current->getKey());
+        // estaba puesta la siguiente linea, pero creo que el arbol quedaba al revez, asi que di vuelta la comparacion
+        //comparision = key->compare(current->getKey());
+        comparision = current->getKey()->compare(key);
+
         if(comparision == EQUAL){  // la clave ya está, se reemplaza
             current->setVal(val);
             delete k; // la clave no se va a usar, se borra

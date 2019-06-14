@@ -53,7 +53,7 @@ void cargarDatosDePrueba(){
 
 void pruebaDeCinesYSalas(){
 
-    ICollection *colCines = new List;
+    IDictionary *colCines = new OrderedDictionary;
 
     Cine *c1 = new Cine(Cine::getNuevoID(), NULL);
     Cine *c2 = new Cine(Cine::getNuevoID(), NULL);
@@ -67,9 +67,10 @@ void pruebaDeCinesYSalas(){
     c3->agregarSala(70);
     c3->agregarSala(80);
     c3->agregarSala(90);
-    colCines->add(c1);
-    colCines->add(c2);
-    colCines->add(c3);
+
+    colCines->add(new Integer(c1->getID()), c1);
+    colCines->add(new Integer(c2->getID()), c2);
+    colCines->add(new Integer(c3->getID()), c3);
 
     IIterator *it = colCines->getIterator();
     while (it->hasCurrent()){
@@ -91,17 +92,17 @@ void pruebaDeComentarios(){
     Usuario *u = new Usuario("usuario-1","", "", false);
     Comentario* c1 = new Comentario(Comentario::getNuevoID(), "hola 1", 0, u);
 
-    (c1->comentar("hola 2", 1))->vincularUsuario(u);
-    (c1->comentar("hola 3", 1))->vincularUsuario(u);
-    (c1->comentar("hola 4", 1))->vincularUsuario(u);
-    (c1->comentar("hola 5", 1))->vincularUsuario(u);
-    (c1->comentar("hola 6", 2))->vincularUsuario(u);
-    (c1->comentar("hola 7", 2))->vincularUsuario(u);
-    (c1->comentar("hola 8", 3))->vincularUsuario(u);
-    (c1->comentar("hola 9", 3))->vincularUsuario(u);
-    (c1->comentar("hola 10", 3))->vincularUsuario(u);
-    (c1->comentar("hola 11", 8))->vincularUsuario(u);
-    (c1->comentar("hola 12", 8))->vincularUsuario(u);
+    (c1->comentar("comentario 2", 1))->vincularUsuario(u);
+    (c1->comentar("comentario 3", 1))->vincularUsuario(u);
+    (c1->comentar("comentario 4", 1))->vincularUsuario(u);
+    (c1->comentar("comentario 5", 1))->vincularUsuario(u);
+    (c1->comentar("respuesta 1 al comentario 2", 2))->vincularUsuario(u);
+    (c1->comentar("respuesta 2 al comentario 2", 2))->vincularUsuario(u);
+    (c1->comentar("respuesta 1 al comentario 3", 3))->vincularUsuario(u);
+    (c1->comentar("respuesta 2 al comentario 3", 3))->vincularUsuario(u);
+    (c1->comentar("respuesta 3 al comentario 3", 3))->vincularUsuario(u);
+    (c1->comentar("respuesta 1 al comentario 8", 8))->vincularUsuario(u);
+    (c1->comentar("respuesta 2 al comentario 8", 8))->vincularUsuario(u);
 
 
     ICollection* colCom = c1->obtenerSubComentarios();
