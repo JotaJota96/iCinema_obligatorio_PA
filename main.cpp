@@ -9,16 +9,17 @@ using namespace std;
 #include "clases/h/ReservaCredito.h"
 #include "clases/h/ReservaDebito.h"
 #include "clases/h/Cine.h"
+#include "clases/h/Comentario.h"
 
 IDictionary *users;
 
 void cargarDatosDePrueba();
-
+void pruebaDeCinesYSalas();
+void pruebaDeComentarios();
 
 int main(){
-    //cargarDatosDePrueba();
 
-
+    // Haga aqui los testeamientos necesarios
 
     return 0;
 }
@@ -50,5 +51,74 @@ void cargarDatosDePrueba(){
     u3->vincularNuevaPuntuacion(p5);
 }
 
+void pruebaDeCinesYSalas(){
 
+    ICollection *colCines = new List;
+
+    Cine *c1 = new Cine(Cine::getNuevoID(), NULL);
+    Cine *c2 = new Cine(Cine::getNuevoID(), NULL);
+    Cine *c3 = new Cine(Cine::getNuevoID(), NULL);
+    c1->agregarSala(10);
+    c1->agregarSala(20);
+    c1->agregarSala(30);
+    c2->agregarSala(40);
+    c2->agregarSala(50);
+    c2->agregarSala(60);
+    c3->agregarSala(70);
+    c3->agregarSala(80);
+    c3->agregarSala(90);
+    colCines->add(c1);
+    colCines->add(c2);
+    colCines->add(c3);
+
+    IIterator *it = colCines->getIterator();
+    while (it->hasCurrent()){
+        Cine* cineIT = (Cine*) it->getCurrent();
+        cout << "El cine con ID " << cineIT->getID() << " tiene las salas:" << endl;
+        ICollection *colSalas = cineIT->listarSalas();
+        IIterator *salasIT = colSalas->getIterator();
+        while (salasIT->hasCurrent()) {
+            Sala* s = (Sala*) salasIT->getCurrent();
+            cout << s->getNumero()<< endl;
+            salasIT->next();
+        }
+        it->next();
+    }
+
+}
+
+void pruebaDeComentarios(){
+    Usuario *u = new Usuario("usuario-1","", "", false);
+    Comentario* c1 = new Comentario(Comentario::getNuevoID(), "hola 1", 0, u);
+
+    (c1->comentar("hola 2", 1))->vincularUsuario(u);
+    (c1->comentar("hola 3", 1))->vincularUsuario(u);
+    (c1->comentar("hola 4", 1))->vincularUsuario(u);
+    (c1->comentar("hola 5", 1))->vincularUsuario(u);
+    (c1->comentar("hola 6", 2))->vincularUsuario(u);
+    (c1->comentar("hola 7", 2))->vincularUsuario(u);
+    (c1->comentar("hola 8", 3))->vincularUsuario(u);
+    (c1->comentar("hola 9", 3))->vincularUsuario(u);
+    (c1->comentar("hola 10", 3))->vincularUsuario(u);
+    (c1->comentar("hola 11", 8))->vincularUsuario(u);
+    (c1->comentar("hola 12", 8))->vincularUsuario(u);
+
+
+    ICollection* colCom = c1->obtenerSubComentarios();
+    IIterator* it = colCom->getIterator();
+    while (it->hasCurrent()) {
+        DtComentario *dtc = (DtComentario*) it->getCurrent();
+        for (int i = 0; i < dtc->getNivelSubComentario(); i++){
+            printf("\t");
+        }
+        cout << "id: " << dtc->getID() << ", texto: " << dtc->getTexto() << endl;
+        it->next();
+    }
+
+    // Haga aqui los testeamientos necesarios
+
+    c1->eliminarComentarios();
+    delete  c1;
+
+}
 

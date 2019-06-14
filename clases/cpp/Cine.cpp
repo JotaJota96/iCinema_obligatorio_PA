@@ -1,21 +1,25 @@
 #include "../h/Cine.h"
 
+int Cine::contadorDeCines = 0;
+int Cine::getNuevoID(){
+    return ++Cine::contadorDeCines;
+}
+
 // constructor y destructor
 Cine::Cine(){
     this->id = 0;
     this->misSalas = new OrderedDictionary();
-    this->contadorDeSalas = 0;
 }
 
 Cine::Cine(int ID, Direccion *Dir){
     this->id = ID;
     this->Dir = Dir;
     this->misSalas = new OrderedDictionary();
-    this->contadorDeSalas = 0;
 }
 
 Cine::~Cine(){
     // esto no se si va vacio, lo puse para que compile
+    // en realidad aca deberia ir el codigo que hay en eliminarSalas() y eliminarSalas() no existir, pero para no modificar los Diagramas de Comunicacion, lo parcheamos asi, y aca queda vacio
 }
 
 // gets y sets
@@ -49,7 +53,7 @@ Sala* Cine::obtenerSala(int id){
 }
 
 void Cine::agregarSala(int capacidad){
-    int idSala = contadorDeSalas++;
+    int idSala = Sala::getNuevoID();
     IKey *k = new Integer(idSala);
     Sala *s = new Sala(idSala, capacidad, this);
     this->misSalas->add(k, s);
@@ -77,14 +81,13 @@ ICollection* Cine::listarSalas(){
     return res;
 }
 
-void Cine::eliminarSala(){
-
+void Cine::eliminarSalas(){
     IIterator *it = misSalas->getIterator();
     while(it->hasCurrent()){
         Sala *Borrar = static_cast<Sala *> (it->getCurrent());
         delete Borrar;
         it->next();
     }
-
     delete it;
+    delete misSalas;
 }

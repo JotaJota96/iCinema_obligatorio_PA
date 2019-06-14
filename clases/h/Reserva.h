@@ -19,11 +19,14 @@ public:
     void setCosto(float);
     void setTipo(tipoReserva);
 
+    static int getNuevoID();
 private:
     int id;
     int asientos;
     float costo;
     tipoReserva tipo;
+    static int contadorDeReservas;
 };
+
 
 #endif // CLASESHESERVA_H

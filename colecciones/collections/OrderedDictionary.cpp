@@ -175,6 +175,9 @@ ICollectible *OrderedDictionary::getMin(){
 
 
 OrderedDictionary::~OrderedDictionary() {
+    // Nico, te olvidaste de este if...
+    if (root == NULL) return;
+    // no pasa nada, ya se lo pongo yo...
     root->deleteInDepth();
     delete root;
 }

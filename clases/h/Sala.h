@@ -12,9 +12,10 @@ class Sala: public ICollectible{
         int numero;
         int capacidad;
         Cine* miCine;
-    public:
-        // constructor y destructor
         static int contadorDeSalas;
+    public:
+        static int getNuevoID();
+        // constructor y destructor
         Sala();
         Sala(int,int, Cine *);
         ~Sala();

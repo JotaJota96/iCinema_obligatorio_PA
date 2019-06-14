@@ -1,5 +1,13 @@
 #include "../h/Sala.h"
 
+
+int Sala::contadorDeSalas= 0;
+int Sala::getNuevoID(){
+    return ++Sala::contadorDeSalas;
+}
+
+
+
 Sala::Sala(){
     this->numero = 0;
     this->capacidad = 0;

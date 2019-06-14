@@ -17,8 +17,9 @@ class Cine: public ICollectible {
         int id;
         Direccion *Dir;
         IDictionary *misSalas;
-        int contadorDeSalas;
+        static int contadorDeCines;
     public:
+        static int getNuevoID();
         // constructor y destructor
         Cine();
         Cine(int,Direccion *);
@@ -36,7 +37,7 @@ class Cine: public ICollectible {
         void agregarSala(int);
         bool esCine(int);
         ICollection* listarSalas();
-        void eliminarSala();
+        void eliminarSalas();
 };
 
 #endif // CINE_H

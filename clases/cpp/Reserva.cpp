@@ -1,5 +1,10 @@
 #include "clases\h\Reserva.h"
 
+int Reserva::contadorDeReservas = 0;
+int Reserva::getNuevoID(){
+    return ++Reserva::contadorDeReservas;
+}
+
 
 Reserva::Reserva(){
     this->id = 0;
