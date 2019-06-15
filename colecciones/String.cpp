@@ -21,7 +21,7 @@ ComparisonRes String::compare(OrderedKey* k) const
     int cmp = strcmp(s, str->s);
     if(cmp == 0)
         return EQUAL;
-    else if(cmp > 0)
+    else if(cmp < 0)
         return GREATER;
     else
         return LESSER;

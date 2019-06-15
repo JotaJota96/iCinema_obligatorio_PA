@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         clases/cpp/Cine.cpp \
         clases/cpp/Comentario.cpp \
+        clases/cpp/Pelicula.cpp \
         clases/cpp/Puntuacion.cpp \
         clases/cpp/Reserva.cpp \
         clases/cpp/ReservaCredito.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
 HEADERS += \
 	clases/h/Cine.h \
 	clases/h/Comentario.h \
+	clases/h/Pelicula.h \
 	clases/h/Puntuacion.h \
 	clases/h/Reserva.h \
 	clases/h/ReservaCredito.h \

@@ -5,21 +5,24 @@ using namespace std;
 #include "colecciones/collections/List.h"
 #include "colecciones/String.h"
 
-#include "clases/h/Usuario.h"
-#include "clases/h/ReservaCredito.h"
-#include "clases/h/ReservaDebito.h"
 #include "clases/h/Cine.h"
 #include "clases/h/Comentario.h"
+#include "clases/h/Pelicula.h"
+#include "clases/h/ReservaCredito.h"
+#include "clases/h/ReservaDebito.h"
+#include "clases/h/Usuario.h"
 
 IDictionary *users;
 
 void cargarDatosDePrueba();
 void pruebaDeCinesYSalas();
 void pruebaDeComentarios();
+void pruebaDePelicula();
 
 
 int main(){
 
+    pruebaDePelicula();
     // Haga aqui los testeamientos necesarios
 
     return 0;
@@ -128,6 +131,66 @@ void pruebaDeComentarios(){
 
     c1->eliminarComentarios();
     delete  c1;
+
+}
+
+void pruebaDePelicula(){
+    IDictionary *colP = new OrderedDictionary();
+    Pelicula* p1 = new Pelicula("peli_1", "poster_1", "sinopsis_1");
+    Pelicula* p2 = new Pelicula("peli_2", "poster_2", "sinopsis_2");
+    Pelicula* p3 = new Pelicula("peli_3", "poster_3", "sinopsis_3");
+    colP->add(new String(p1->getTitulo().c_str()), p1);
+    colP->add(new String(p2->getTitulo().c_str()), p2);
+    colP->add(new String(p3->getTitulo().c_str()), p3);
+
+    Usuario *u1 = new Usuario("usuario_1","", "", false);
+    Usuario *u2 = new Usuario("usuario_2","", "", false);
+    Usuario *u3 = new Usuario("usuario_3","", "", false);
+
+    //(p1->comentar("comentario 0"))->vincularUsuario(u2);
+    (p1->comentar("comentario 1"))->vincularUsuario(u1);
+    (p1->comentar("comentario 2"))->vincularUsuario(u1);
+    (p1->comentar("comentario 3"))->vincularUsuario(u1);
+    (p1->comentarComentario("respuesta 1 al comentario 1", 1))->vincularUsuario(u1);
+    (p1->comentarComentario("respuesta 2 al comentario 1", 1))->vincularUsuario(u2);
+    (p1->comentarComentario("respuesta 1 al comentario 3", 3))->vincularUsuario(u3);
+    (p1->comentarComentario("respuesta 2 al comentario 3", 3))->vincularUsuario(u3);
+    (p1->comentarComentario("respuesta 3 al comentario 3", 3))->vincularUsuario(u2);
+    (p1->comentarComentario("respuesta 1 al comentario 8", 8))->vincularUsuario(u1);
+    (p1->comentarComentario("respuesta 2 al comentario 8", 8))->vincularUsuario(u2);
+
+    ICollection *IC = p1->obtenerComentarios();
+    IIterator *it = IC->getIterator();
+    while(it->hasCurrent()){
+        DtComentario *dtCom = static_cast<DtComentario *>(it->getCurrent());
+        cout << *dtCom <<endl;
+        it->next();
+    }
+    cout <<"-+++++++++++++++++++"<< endl;
+
+    it = colP->getIterator();
+    while(it->hasCurrent()){
+        cout <<"--------------------"<< endl;
+        cout << *(static_cast<Pelicula*>(it->getCurrent())->getDataType())<<endl;
+        it->next();
+    }
+    u1->vincularNuevaPuntuacion(p1->nuevaPuntuacion(1));
+    u2->vincularNuevaPuntuacion(p2->nuevaPuntuacion(2));
+    u3->vincularNuevaPuntuacion(p3->nuevaPuntuacion(3));
+    u2->vincularNuevaPuntuacion(p2->nuevaPuntuacion(2));
+    u3->vincularNuevaPuntuacion(p3->nuevaPuntuacion(5));
+    u1->vincularNuevaPuntuacion(p2->nuevaPuntuacion(4));
+    u2->vincularNuevaPuntuacion(p1->nuevaPuntuacion(2));
+    u1->vincularNuevaPuntuacion(p1->nuevaPuntuacion(4));
+    cout <<"-+++++++++++++++++++"<< endl;
+    it = colP->getIterator();
+    while(it->hasCurrent()){
+        cout <<"--------------------"<< endl;
+        cout << *(static_cast<Pelicula*>(it->getCurrent())->getDataType())<<endl;
+        it->next();
+    }
+
+    // falta probar obtener cines
 
 }
 
