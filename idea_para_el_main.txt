@@ -10,6 +10,10 @@ float ingresarFloat(string msj);
 int ingresarInt(string msj);
 string ingresarString(string msj);
 bool ingresarBool(string msj);
+void pausa();
+void limpiarPantalla();
+void mostrarTitulo(string titulo);
+
 
 // menus segun rol
 bool cargarMenuInvitado();
@@ -22,9 +26,9 @@ void altaCine();
 void altaFuncion();
 void crearReserva();
 void puntuarPelicula();
-void comentarPelÃ­cula();
-void eliminarPelÃ­cula();
-void verInfoDePelÃ­cula();
+void comentarPelicula();
+void eliminarPelicula();
+void verInfoDePelicula();
 void verComentariosYPuntajeDePelicula();
 
 
@@ -52,23 +56,23 @@ int main(){
 bool cargarMenuInvitado(){
     int opcion = -1;
     while (opcion != 0){
-        system("CLS");
-        cout << "---------- Bienvenido a iCinema ---------" << endl;
+        limpiarPantalla();
+        mostrarTitulo("Bienvenido a iCinema");
         cout << "1- Iniciar sesion" << endl;
-        cout << "2- Ver Info de PelÃ­cula" << endl;
+        cout << "2- Ver Info de Pelicula" << endl;
         cout << "3- Ver comentarios y puntaje de pelicula" << endl;
         cout << "0- Salir..." << endl;
         opcion = ingresarInt("Ingrese una opcion: ");
 
         switch (opcion) {
         case 1: // Iniciar sesion
-
-            // pongo esto por ahora...
-            tipoUsuarioActual = USUARIO;
+            iniciarSesion();
             return false;
-        case 2: // Ver Info de PelÃ­cula
+        case 2: // Ver Info de Pelicula
+            verInfoDePelicula();
             break;
         case 3: // Ver comentarios y puntaje de pelicula
+            verComentariosYPuntajeDePelicula();
             break;
         }
     }
@@ -77,26 +81,31 @@ bool cargarMenuInvitado(){
 bool cargarMenuUsuario(){
     int opcion = -1;
     while (opcion != 0){
-        system("CLS");
-        cout << "---------- Bienvenido a iCinema ---------" << endl;
+        limpiarPantalla();
+        mostrarTitulo("Bienvenido a iCinema");
         cout << "1- Crear reserva" << endl;
         cout << "2- Puntuar pelicula" << endl;
-        cout << "3- Comentar pelÃ­cula" << endl;
-        cout << "4- Ver Info de PelÃ­cula" << endl;
+        cout << "3- Comentar pelicula" << endl;
+        cout << "4- Ver Info de Pelicula" << endl;
         cout << "5- Ver comentarios y puntaje de pelicula" << endl;
         cout << "0- Salir..." << endl;
         opcion = ingresarInt("Ingrese una opcion: ");
 
         switch (opcion) {
         case 1: // Crear reserva
+            crearReserva();
             break;
         case 2: // Puntuar pelicula
+            puntuarPelicula();
             break;
-        case 3: // Comentar pelÃ­cula
+        case 3: // Comentar pelicula
+            comentarPelicula();
             break;
-        case 4: // Ver Info de PelÃ­cula
+        case 4: // Ver Info de Pelicula
+            verInfoDePelicula();
             break;
         case 5: // Ver comentarios y puntaje de pelicula
+            verComentariosYPuntajeDePelicula();
             break;
         }
     }
@@ -105,19 +114,23 @@ bool cargarMenuUsuario(){
 bool cargarMenuAdministrador(){
     int opcion = -1;
     while (opcion != 0){
-        system("CLS");
+        limpiarPantalla();
+        mostrarTitulo("Bienvenido a iCinema");
         cout << "1- Alta cine" << endl;
         cout << "2- Alta funcion" << endl;
-        cout << "3- Eliminar pelÃ­cula" << endl;
+        cout << "3- Eliminar pelicula" << endl;
         cout << "0- Salir..." << endl;
         opcion = ingresarInt("Ingrese una opcion: ");
 
         switch (opcion) {
         case 1: // Alta cine
+            altaCine();
             break;
         case 2: // Alta funcion
+            altaFuncion();
             break;
-        case 3: // Eliminar pelÃ­cula
+        case 3: // Eliminar pelicula
+            eliminarPelicula();
             break;
         }
     }
@@ -127,10 +140,71 @@ bool cargarMenuAdministrador(){
 
 ///////////////////////////////////////////////////////////////////////////////////
 void iniciarSesion(){
+    bool cancelar = false;
+    while (!cancelar){
+        limpiarPantalla();
+        mostrarTitulo("Iniciar sesion");
+        string usu = ingresarString("Ingrese su nickname: ");
+        string pass = ingresarString("Ingrese su contrasenia: ");
 
+        bool ok = true; // sis->iniciarSesion(usu, pass);
+
+        if (ok){
+            // consultar al sistema que tipo de usuario acaba de iniciar sesion
+            // por ahora pongo esto...
+            cout << "Esto esta provisorio..." << endl;
+            cout << "Como que rol queres ingresar?..." << endl;
+            switch (ingresarInt("0- invitado\n1-usuario\n2-admin: ")) {
+            case 1:
+                tipoUsuarioActual = USUARIO;
+                break;
+            case 2:
+                tipoUsuarioActual = ADMINISTRADOR;
+                break;
+            default:
+                tipoUsuarioActual = INVITADO;
+            }
+            return;
+        }else{
+            cout << "El nickname o la contrasenia son incorrectos" << endl;
+            cancelar = ! ingresarBool("Desea reintentar? ");
+        }
+
+    }
 }
 void altaCine(){
+    bool seguirAgregando = true;
+    bool agregarsala = true;
+    bool confirmar = false;
 
+    while (seguirAgregando) {
+        limpiarPantalla();
+       mostrarTitulo("Alta de cine");
+
+        string departamento = ingresarString("Ingrese departamento: ");
+        string ciudad = ingresarString("Ingrese ciudad: ");
+        string calle = ingresarString("Ingrese calle: ");
+        string numero = ingresarString("Ingrese numero: ");
+
+        // Direcion *dir = new Direccion(departamento, ciudad, calle, numero);
+        // sis->nuevoCine(dir);
+
+        do {
+            int capacidad = ingresarInt("Ingrese la capacidad de la sala: ");
+            //sis->agregarSala(capacidad);
+            agregarsala = ingresarBool("Desea agregar mas salas? ");
+        } while (agregarsala);
+
+        confirmar = ingresarBool("Confirmar el nuevo cine? ");
+        if (confirmar){
+            // sis->confirmarNuevoCine();
+        }else{
+            // sis->cancelarNuevoCine();
+
+        }
+
+        seguirAgregando = ingresarBool("Desea agregar mas cines? ");
+    }
 }
 void altaFuncion(){
 
@@ -141,13 +215,13 @@ void crearReserva(){
 void puntuarPelicula(){
 
 }
-void comentarPelÃ­cula(){
+void comentarPelicula(){
 
 }
-void eliminarPelÃ­cula(){
+void eliminarPelicula(){
 
 }
-void verInfoDePelÃ­cula(){
+void verInfoDePelicula(){
 
 }
 void verComentariosYPuntajeDePelicula(){
@@ -238,6 +312,28 @@ bool ingresarBool(string msj){
         }
     }
 }
+void pausa(){
+    system("PAUSE");
+}
+void limpiarPantalla(){
+    system("CLS");
+}
+void mostrarTitulo(string titulo){
+    int ancho = 50;
+    ancho -= titulo.length();
+    for (int i = 1; i < ancho/2; i++) printf("-");
+    printf(" %s ", titulo.c_str());
+    for (int i = 1; i < ancho/2; i++) printf("-");
+    printf("\n");
+}
 
 ///////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
 
