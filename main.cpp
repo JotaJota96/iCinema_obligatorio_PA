@@ -17,6 +17,7 @@ void cargarDatosDePrueba();
 void pruebaDeCinesYSalas();
 void pruebaDeComentarios();
 
+
 int main(){
 
     // Haga aqui los testeamientos necesarios
@@ -55,9 +56,9 @@ void pruebaDeCinesYSalas(){
 
     IDictionary *colCines = new OrderedDictionary;
 
-    Cine *c1 = new Cine(Cine::getNuevoID(), NULL);
-    Cine *c2 = new Cine(Cine::getNuevoID(), NULL);
-    Cine *c3 = new Cine(Cine::getNuevoID(), NULL);
+    Cine *c1 = new Cine(Cine::getNuevoID(), new Direccion("dep1", "ciu1", "cal1", "num1"));
+    Cine *c2 = new Cine(Cine::getNuevoID(), new Direccion("dep2", "ciu2", "cal2", "num2"));
+    Cine *c3 = new Cine(Cine::getNuevoID(), new Direccion("dep3", "ciu3", "cal3", "num3"));
     c1->agregarSala(10);
     c1->agregarSala(20);
     c1->agregarSala(30);
@@ -75,17 +76,21 @@ void pruebaDeCinesYSalas(){
     IIterator *it = colCines->getIterator();
     while (it->hasCurrent()){
         Cine* cineIT = (Cine*) it->getCurrent();
-        cout << "El cine con ID " << cineIT->getID() << " tiene las salas:" << endl;
+        DtCine* dtC = cineIT->getDataType();
+
+        cout << "+++++++++++++++" << endl;
+        cout << *dtC << endl;
+
         ICollection *colSalas = cineIT->listarSalas();
         IIterator *salasIT = colSalas->getIterator();
         while (salasIT->hasCurrent()) {
-            Sala* s = (Sala*) salasIT->getCurrent();
-            cout << s->getNumero()<< endl;
+            DtSala* s = (DtSala*) salasIT->getCurrent();
+            cout << "------" << endl;
+            cout << *s << endl;
             salasIT->next();
         }
         it->next();
     }
-
 }
 
 void pruebaDeComentarios(){
@@ -109,10 +114,13 @@ void pruebaDeComentarios(){
     IIterator* it = colCom->getIterator();
     while (it->hasCurrent()) {
         DtComentario *dtc = (DtComentario*) it->getCurrent();
+        cout << *dtc << endl;
+        /*
         for (int i = 0; i < dtc->getNivelSubComentario(); i++){
             printf("\t");
         }
         cout << "id: " << dtc->getID() << ", texto: " << dtc->getTexto() << endl;
+        */
         it->next();
     }
 

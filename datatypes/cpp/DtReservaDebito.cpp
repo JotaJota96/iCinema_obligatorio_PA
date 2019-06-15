@@ -19,3 +19,18 @@ std::string DtReservaDebito::getNombreBanco(){
 }
 
 
+//Sobrecarga-------------
+std::ostream& operator <<(std::ostream &salida, const DtReservaDebito &r){
+    // casteo la direccion donde esta r a un tipo const DtReserva* y mando a mostrar lo que esta en esa direccion
+    // osea, llama a la sobrecarga de la clase padre DtReserva
+    cout << *(static_cast<const DtReserva*>(&r)) << endl;
+    /*
+     * // Es lo mismo que haber hecho esto pero en una linea...
+     * const DtReserva *rr = &r;
+     * cout << *rr << endl;
+     */
+
+    salida << "Banco: " << r.nombreBanco;
+
+    return salida;
+}

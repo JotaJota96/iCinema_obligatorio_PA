@@ -94,7 +94,11 @@ bool operator <(const DateTime &f1, const DateTime &f2){
 
 
 std::ostream& operator <<(std::ostream &salida, const DateTime &f){
-    salida << f.dia << "/" << f.mes << "/" << f.anio << " " << f.hora << ":" << f.minuto;
+    salida << f.dia << "/" << f.mes << "/" << f.anio << " ";
+    salida << f.hora << ":";
+    // pongo este if porque sino cuando son por ejemplo, las 15 y 5, muestra 15:5 y queda feo
+    if (f.minuto < 10) salida << "0";
+    salida << f.minuto;
 	return salida;
 }
 

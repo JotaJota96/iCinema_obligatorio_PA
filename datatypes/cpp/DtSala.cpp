@@ -24,3 +24,13 @@ int DtSala::getIDCine(){
     return this->idCine;
 }
 
+
+
+std::ostream& operator <<(std::ostream &salida, const DtSala &s){
+    salida << "Numero: " << s.numero << endl;
+    salida << "Capacidad: " << s.capasidad << endl;
+    salida << "ID del cine: " << s.idCine;
+
+    return salida;
+}
+

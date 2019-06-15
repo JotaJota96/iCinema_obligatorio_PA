@@ -39,9 +39,9 @@ void Cine::setDireccion(Direccion *Dir){
     this->Dir=Dir;
 }
 
-DtCine Cine::getDataType(){
-    DtCine * DTC = new DtCine(this->id,*this->Dir);
-    return * DTC;
+DtCine *Cine::getDataType(){
+   DtCine * DTC = new DtCine(this->id, this->Dir);
+    return DTC;
 }
 
 // operaciones

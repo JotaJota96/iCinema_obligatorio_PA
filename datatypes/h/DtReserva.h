@@ -1,6 +1,7 @@
 #ifndef DtReserva_h
 #define DtReserva_h
 #include <iostream>
+using namespace std;
 
 enum tipoReserva {reservaCredito, reservaDebito};
 
@@ -19,5 +20,8 @@ class DtReserva{
 		int getAsientos();
 		float getCosto();
 		tipoReserva getTipo();
+
+        //Sobrecarga-------------
+        friend std::ostream& operator <<(std::ostream &salida, const DtReserva &r);
 };
 #endif

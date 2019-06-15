@@ -20,6 +20,7 @@ class DtPelicula : public ICollectible{
         string getSinopsis();
         int getPuntaje();
 
+        friend std::ostream& operator <<(std::ostream &salida, const DtPelicula &p);
 };
 
 #endif // DTPELICULA_H

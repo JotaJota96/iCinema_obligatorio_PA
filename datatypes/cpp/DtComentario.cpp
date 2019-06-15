@@ -29,3 +29,13 @@ int DtComentario::getNivelSubComentario(){
 string DtComentario::getNickNameUsuario(){
     return this->nickNameUsuario;
 }
+
+
+std::ostream& operator <<(std::ostream &salida, const DtComentario &c){
+    // segun el nivel del comentario, agrega espacios a la izquierda para identarlo
+    for (int i = 0; i < c.nivelSubComentario * 4; i++) salida << " ";
+    salida << c.nickNameUsuario;
+    salida << " (" << c.ID << "): ";
+    salida << c.texto;
+    return salida;
+}

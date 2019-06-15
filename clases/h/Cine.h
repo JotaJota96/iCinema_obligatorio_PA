@@ -26,7 +26,7 @@ class Cine: public ICollectible {
         ~Cine();
 
          // gets y sets
-        DtCine getDataType();
+	DtCine* getDataType();
         int getID();
         Direccion* getDireccion();
         void setID(int);

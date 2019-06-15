@@ -11,6 +11,9 @@ class DtReservaDebito: public DtReserva{
         ~DtReservaDebito();
         //---Getters ---------------
         std::string getNombreBanco();
+
+        //Sobrecarga-------------
+        friend std::ostream& operator <<(std::ostream &salida, const DtReservaDebito &r);
 		
 };
 #endif

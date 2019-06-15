@@ -18,6 +18,8 @@ class DtSala : public ICollectible{
         int getNumero();
         int getCapasidad();
         int getIDCine();
+
+        friend std::ostream& operator <<(std::ostream &salida, const DtSala &s);
 };
 
 #endif // DTSALA_H

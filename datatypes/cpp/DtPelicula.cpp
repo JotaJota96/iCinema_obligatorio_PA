@@ -32,6 +32,14 @@ int DtPelicula::getPuntaje(){
 }
 
 
+std::ostream& operator <<(std::ostream &salida, const DtPelicula &p){
+    salida << "Titulo: " << p.titulo << endl;
+    salida << "Poster: " << p.poster << endl;
+    salida << "Sinopsis: " << p.sinopsis << endl;
+    salida << "Punaje: " <<  p.puntaje;
+    return salida;
+}
+
 
 
 

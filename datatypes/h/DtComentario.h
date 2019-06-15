@@ -19,6 +19,8 @@ class DtComentario : public ICollectible{
         string getTexto();
         int getNivelSubComentario();
         string getNickNameUsuario();
+
+        friend std::ostream& operator <<(std::ostream &salida, const DtComentario &c);
 };
 
 #endif // DTCOMENTARIO_H

@@ -8,14 +8,16 @@ using namespace std;
 class DtCine : public ICollectible{
     private:
         int ID;
-        Direccion direccion;
+        Direccion* direccion;
     public:
         DtCine();
-        DtCine(int, Direccion);
+        DtCine(int, Direccion*);
         ~DtCine();
 
         int getID();
-        Direccion getDireccion();
+        Direccion* getDireccion();
+
+        friend std::ostream& operator <<(std::ostream &, const DtCine &);
 };
 
 #endif // DTCINE_H
