@@ -22,7 +22,6 @@ void limpiarPantalla();
 void mostrarTitulo(string titulo);
 void mostrarError(string err);
 
-
 // menus segun rol
 bool cargarMenuInvitado();
 bool cargarMenuUsuario();
@@ -188,34 +187,34 @@ void altaCine(){
         bool confirmar = false;
 
         while (seguirAgregando) {
-        limpiarPantalla();
-       mostrarTitulo("Alta de cine");
+            limpiarPantalla();
+            mostrarTitulo("Alta de cine");
 
-        string departamento = ingresarString("Ingrese departamento: ");
-        string ciudad = ingresarString("Ingrese ciudad: ");
-        string calle = ingresarString("Ingrese calle: ");
-        string numero = ingresarString("Ingrese numero: ");
+            string departamento = ingresarString("Ingrese departamento: ");
+            string ciudad = ingresarString("Ingrese ciudad: ");
+            string calle = ingresarString("Ingrese calle: ");
+            string numero = ingresarString("Ingrese numero: ");
 
-        Direccion *dir = new Direccion(departamento, ciudad, calle, numero);
-        sis->nuevoCine(dir);
+            Direccion *dir = new Direccion(departamento, ciudad, calle, numero);
+            sis->nuevoCine(dir);
 
-        do {
-            int capacidad = ingresarInt("Ingrese la capacidad de la sala: ");
-            sis->nuevaSala(capacidad);
-            agregarsala = ingresarBool("Desea agregar mas salas? ");
-        } while (agregarsala);
+            do {
+                int capacidad = ingresarInt("Ingrese la capacidad de la sala: ");
+                sis->nuevaSala(capacidad);
+                agregarsala = ingresarBool("Desea agregar mas salas? ");
+            } while (agregarsala);
 
-        confirmar = ingresarBool("Confirmar el nuevo cine? ");
-        if (confirmar){
-            sis->confirmarNuevoCine();
-        }else{
-            sis->cancelarNuevoCine();
+            confirmar = ingresarBool("Confirmar el nuevo cine? ");
+            if (confirmar){
+                sis->confirmarNuevoCine();
+            }else{
+                sis->cancelarNuevoCine();
 
+            }
+
+            seguirAgregando = ingresarBool("Desea agregar mas cines? ");
         }
-
-        seguirAgregando = ingresarBool("Desea agregar mas cines? ");
-    }
-    */
+        */
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }
@@ -229,7 +228,129 @@ void altaFuncion(){
 }
 void crearReserva(){
     try {
+        bool cancelar = false;
+        bool seleccionoPelicula = false;
+        bool seleccionoVerInfo= false;
+        bool seleccionoCine= false;
+        bool seleccionoFuncion = false;
+        ICollection* col;
+        IIterator* it;
 
+        do {
+            cancelar = seleccionoPelicula = seleccionoVerInfo= seleccionoCine= seleccionoFuncion = false;
+
+            limpiarPantalla();
+            mostrarTitulo("Crear reserva");
+            cout << "--- Lista de peliculas ---" << endl;
+
+            DtPelicula* dtP;
+            /*col = sis->listarPeliculas();
+            it = col->getIterator();
+            while(it->hasCurrent()){
+                dtP = static_cast<DtPelicula*>(it->getCurrent());
+                cout << dtP->getTitulo() << endl;
+                it->next();
+            }
+            delete col;
+            delete it;
+            */
+            seleccionoPelicula = ingresarBool("Desea seleccionar una pelicula? ");
+            if ( seleccionoPelicula){
+                string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
+                dtP = sis->seleccionarPelicula(titulo);
+                limpiarPantalla();
+                cout << *dtP << endl;
+
+                seleccionoVerInfo = ingresarBool("Desea ver informacion adicional? ");
+                if (seleccionoVerInfo){
+                    limpiarPantalla();
+                    cout << "--- Lista de cines ---" << endl;
+                    /*
+                    DtCine* dtC;
+                    col = sis->listarCines();
+                    it = col->getIterator();
+                    while(it->hasCurrent()){
+                        dtC = static_cast<DtCine*>(it->getCurrent());
+                        cout << *dtC << endl << endl;
+                        it->next();
+                    }
+                    delete col;
+                    delete it;
+                    */
+                    seleccionoCine = ingresarBool("Desea seleccionar un cine?");
+                    if (seleccionoCine){
+                        int idCine = ingresarInt("Ingrese el ID del cine para seleccionarlo: ");
+                        sis->seleccionarCine(idCine);
+                        limpiarPantalla();
+                        cout << "--- Lista de funciones ---" << endl;
+                        /*
+                        DtFuncion* dtF;
+                        col = sis->listarFunciones(new DateTime()); // por defecto tiene la fecha y hora actual
+                        it = col->getIterator();
+                        while(it->hasCurrent()){
+                            dtF = static_cast<DtFuncion*>(it->getCurrent());
+                            cout << *dtF << endl << endl;
+                            it->next();
+                        }
+                        delete col;
+                        delete it;
+                        */
+                        seleccionoFuncion = ingresarBool("Desea seleccionar una funcion? ");
+                        if(seleccionoFuncion){
+                            int idFuncion =ingresarInt("Ingrese el ID de la funcion para seleccionarla: ");
+                            sis->seleccionarFuncion(idFuncion);
+                        }else{
+                            sis->cancelarNuevaReserva();
+                        }
+                    }else{
+                        sis->cancelarNuevaReserva();
+                    }
+                }else{
+                    sis->cancelarNuevaReserva();
+                }
+            }else{
+                sis->cancelarNuevaReserva();
+                return;
+            }
+
+            if (! seleccionoFuncion){
+                cancelar = ! ingresarBool("Desea seleccionar otra pelicula? ");
+            }
+        }while (!cancelar && !seleccionoFuncion);
+        if (cancelar) return;
+        limpiarPantalla();
+
+        int cantidadAsientos = ingresarInt("Ingrese la cantidad de asientos: ");
+        sis->nuevaReserva(cantidadAsientos);
+
+        while (true){
+            string opcion = ingresarString("Ingrese el medio de pago [credito/debito]: ");
+            if (opcion == "debito"){
+                string nombreBanco = ingresarString("Ingrese el nombre del banco: ");
+                sis->pagoDebito(nombreBanco);
+                break;
+            }else if (opcion == "credito") {
+                string nombreFinanciera = ingresarString("Ingrese el nombre de la financiera: ");
+                float descuento = sis->pagoCredito(nombreFinanciera);
+                if (descuento == 0) cout << "No tenemos descuentos para esa financiera" << endl;
+                else cout << "Su reserva tendra un " << descuento << "% de descuento" << endl;
+                break;
+            }
+        }
+
+        DtReserva *dtR = sis->vistaPreviaDeReserva();
+        if (dynamic_cast<DtReservaDebito*>(dtR)){
+            cout << *(dynamic_cast<DtReservaDebito*>(dtR)) << endl;
+        }else{
+            cout << *(dynamic_cast<DtReservaCredito*>(dtR)) << endl;
+        }
+
+        bool confirmar =ingresarBool("Desea confirmar la reserva? ");
+        if (confirmar){
+            sis->confirmarNuevoCine();
+        }else {
+            sis->cancelarNuevaReserva();
+        }
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }
@@ -307,11 +428,91 @@ void eliminarPelicula(){
 }
 void verInfoDePelicula(){
     try {
-        // esta conviene hacerla despues de crerReserva() asi es solo copiar y pegar una parte
+        bool cancelar = false;
+        bool seleccionoPelicula = false;
+        bool seleccionoVerInfo= false;
+        bool seleccionoCine= false;
+        bool seleccionoFuncion = false;
+        ICollection* col;
+        IIterator* it;
+
+        do {
+            cancelar = seleccionoPelicula = seleccionoVerInfo= seleccionoCine= seleccionoFuncion = false;
+
+            limpiarPantalla();
+            mostrarTitulo("Crear reserva");
+            cout << "--- Lista de peliculas ---" << endl;
+
+            DtPelicula* dtP;
+            /*col = sis->listarPeliculas();
+            it = col->getIterator();
+            while(it->hasCurrent()){
+                dtP = static_cast<DtPelicula*>(it->getCurrent());
+                cout << dtP->getTitulo() << endl;
+                it->next();
+            }
+            delete col;
+            delete it;
+            */
+            seleccionoPelicula = ingresarBool("Desea seleccionar una pelicula? ");
+            if ( seleccionoPelicula){
+                string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
+                dtP = sis->seleccionarPelicula(titulo);
+                limpiarPantalla();
+                cout << *dtP << endl;
+
+                seleccionoVerInfo = ingresarBool("Desea ver informacion adicional? ");
+                if (seleccionoVerInfo){
+                    limpiarPantalla();
+                    cout << "--- Lista de cines ---" << endl;
+                    /*
+                    DtCine* dtC;
+                    col = sis->listarCines();
+                    it = col->getIterator();
+                    while(it->hasCurrent()){
+                        dtC = static_cast<DtCine*>(it->getCurrent());
+                        cout << *dtC << endl << endl;
+                        it->next();
+                    }
+                    delete col;
+                    delete it;
+                    */
+                    seleccionoCine = ingresarBool("Desea seleccionar un cine?");
+                    if (seleccionoCine){
+                        int idCine = ingresarInt("Ingrese el ID del cine para seleccionarlo: ");
+                        sis->seleccionarCine(idCine);
+                        limpiarPantalla();
+                        cout << "--- Lista de funciones ---" << endl;
+                        /*
+                        DtFuncion* dtF;
+                        col = sis->listarFunciones(new DateTime()); // por defecto tiene la fecha y hora actual
+                        it = col->getIterator();
+                        while(it->hasCurrent()){
+                            dtF = static_cast<DtFuncion*>(it->getCurrent());
+                            cout << *dtF << endl << endl;
+                            it->next();
+                        }
+                        delete col;
+                        delete it;
+                        */
+
+                        sis->cancelarVerInformacionDePelicula();
+                    }else{
+                        sis->cancelarVerInformacionDePelicula();
+                    }
+                }else{
+                    sis->cancelarVerInformacionDePelicula();
+                }
+            }else{
+                sis->cancelarVerInformacionDePelicula();
+                return;
+            }
+
+            cancelar = ! ingresarBool("Desea seleccionar otra pelicula? ");
+        }while (!cancelar && !seleccionoFuncion);
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }
-
 }
 void verComentariosYPuntajeDePelicula(){
     try {
@@ -329,6 +530,7 @@ void verComentariosYPuntajeDePelicula(){
             it->next();
         }
         delete colP;
+        delete it;
 
         string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
 
