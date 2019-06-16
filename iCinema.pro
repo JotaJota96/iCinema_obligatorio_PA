@@ -70,4 +70,5 @@ HEADERS += \
 	datatypes/h/DtReserva.h \
 	datatypes/h/DtReservaCredito.h \
 	datatypes/h/DtReservaDebito.h \
-	datatypes/h/DtSala.h
+	datatypes/h/DtSala.h \
+	interfazGrafica.h

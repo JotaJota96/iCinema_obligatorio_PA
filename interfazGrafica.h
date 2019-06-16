@@ -32,7 +32,7 @@ void verInfoDePelicula();
 void verComentariosYPuntajeDePelicula();
 
 
-int main(){
+void interfazGrafica(){
     bool salir = false;
     while (!salir){
         switch (tipoUsuarioActual) {
@@ -47,8 +47,6 @@ int main(){
             break;
         }
     }
-
-    return 0;
 }
 
 
@@ -190,7 +188,7 @@ void altaCine(){
         // sis->nuevoCine(dir);
 
         do {
-            int capacidad = ingresarInt("Ingrese la capacidad de la sala: ");
+            // int capacidad = ingresarInt("Ingrese la capacidad de la sala: ");
             //sis->agregarSala(capacidad);
             agregarsala = ingresarBool("Desea agregar mas salas? ");
         } while (agregarsala);
@@ -328,12 +326,5 @@ void mostrarTitulo(string titulo){
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 
 

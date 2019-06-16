@@ -19,10 +19,10 @@ void pruebaDeCinesYSalas();
 void pruebaDeComentarios();
 void pruebaDePelicula();
 
+#include "interfazGrafica.h"
 
 int main(){
-
-    pruebaDePelicula();
+    interfazGrafica();
     // Haga aqui los testeamientos necesarios
 
     return 0;
