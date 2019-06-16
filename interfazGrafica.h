@@ -211,19 +211,103 @@ void crearReserva(){
 
 }
 void puntuarPelicula(){
+    limpiarPantalla();
+    mostrarTitulo("Puntuar pelicula");
+    /*
+     * DtPelicula* dtP;
+      ICollection* colP = sis->listarPeliculas();
+      IIterator* it = colP->getIterator();
+      while(it->hasCurrent()){
+          dtP = static_cast<DtPelicula*>(it->getCurrent());
+          cout << *dtP << endl << endl;
+          it->next();
+      }
+      delete colP;
+    */
+    string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
+    /*
+      sis->seleccinarPelicula(titulo);
+    int puntajeDado = sis->obtenerPuntajeDadoPorUsuario();
+    if (puntajeDado != -1){☺
+        cout << "El puntaje que le has dado a esta pelicula es: " << puntajeDado << endl;
+        bool modificar = ingresarBool("Deseas modificarlo? ");
+        if (modificar){
+            puntajeDado = ingresarInt("Ingrese el nuevo puntaje: ");
+            sis->puntuarPelicula(puntajeDado);
+        }
+    }else{
+        puntajeDado = ingresarInt("Ingrese el puntaje: ");
+        sis->puntuarPelicula(puntajeDado);
+    }
+    */
 
 }
 void comentarPelicula(){
 
 }
 void eliminarPelicula(){
+    limpiarPantalla();
+    mostrarTitulo("Eliminar pelicula");
+    /*
+     * DtPelicula* dtP;
+      ICollection* colP = sis->listarPeliculas();
+      IIterator* it = colP->getIterator();
+      while(it->hasCurrent()){
+          dtP = static_cast<DtPelicula*>(it->getCurrent());
+          cout << dtP->getTitulo() << endl;
+          it->next();
+      }
+      delete colP;
+    */
+    string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
+    // sis->seleccinarPelicula(titulo);
+
+    bool confirmar = ingresarBool("Confirmar eliminar pelicula? ");
+    if (confirmar){
+        // sis->confirmarEliminarPelicula();
+    }else{
+        // sis->cancelarEliminarPelicula();
+    }
 
 }
 void verInfoDePelicula(){
-
+    // esta conviene hacerla despues de crerReserva() asi es solo copiar y pegar una parte
 }
 void verComentariosYPuntajeDePelicula(){
-
+    limpiarPantalla();
+    mostrarTitulo("Ver comentarios y puntaje");
+    /*
+     * DtPelicula* dtP;
+      ICollection* colP = sis->listarPeliculas();
+      IIterator* it = colP->getIterator();
+      while(it->hasCurrent()){
+          dtP = static_cast<DtPelicula*>(it->getCurrent());
+          cout << "Titulo: " << dtP->getTitulo() << endl;
+          cout << "Poster: " << dtP->getPoster() << endl;
+          cout << endl;
+          it->next();
+      }
+      delete colP;
+    */
+    string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
+    /*
+      dtP = sis->seleccinarPelicula(titulo);
+    cout << "----- Pelicula ------ "<< endl;
+      cout << *dtP << endl;
+    */
+    cout << "---- Comentarios ---- "<< endl;
+    /*
+      ICollection* colC = sis->listarComentarios();
+      it = colC->getIterator();
+      while(it->hasCurrent()){
+          DtComentario* dtC = static_cast<DtComentario*>(it->getCurrent());
+          cout << *dtC << endl;
+          it->next();
+      }
+      delete colC;
+    */
+    cout << "--------------------- "<< endl;
+    pausa();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

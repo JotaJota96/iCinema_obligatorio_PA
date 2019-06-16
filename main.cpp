@@ -54,7 +54,6 @@ void cargarDatosDePrueba(){
     u3->vincularNuevaPuntuacion(p4);
     u3->vincularNuevaPuntuacion(p5);
 }
-
 void pruebaDeCinesYSalas(){
 
     IDictionary *colCines = new OrderedDictionary;
@@ -95,7 +94,6 @@ void pruebaDeCinesYSalas(){
         it->next();
     }
 }
-
 void pruebaDeComentarios(){
     Usuario *u = new Usuario("usuario-1","", "", false);
     Comentario* c1 = new Comentario(Comentario::getNuevoID(), "hola 1", 0, u);
@@ -133,7 +131,6 @@ void pruebaDeComentarios(){
     delete  c1;
 
 }
-
 void pruebaDePelicula(){
     IDictionary *colP = new OrderedDictionary();
     Pelicula* p1 = new Pelicula("peli_1", "poster_1", "sinopsis_1");
