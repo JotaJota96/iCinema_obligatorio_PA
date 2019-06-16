@@ -21,8 +21,10 @@ void pruebaDePelicula();
 
 #include "interfazGrafica.h"
 
+
 int main(){
     interfazGrafica();
+
     // Haga aqui los testeamientos necesarios
 
     return 0;
