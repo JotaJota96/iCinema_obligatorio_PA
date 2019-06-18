@@ -7,6 +7,7 @@ SOURCES += \
         clases/cpp/Cine.cpp \
         clases/cpp/Comentario.cpp \
         clases/cpp/Fabrica.cpp \
+        clases/cpp/Funcion.cpp \
         clases/cpp/ISistema.cpp \
         clases/cpp/Pelicula.cpp \
         clases/cpp/Puntuacion.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
 	clases/h/Cine.h \
 	clases/h/Comentario.h \
 	clases/h/Fabrica.h \
+	clases/h/Funcion.h \
 	clases/h/ISistema.h \
 	clases/h/Pelicula.h \
 	clases/h/Puntuacion.h \

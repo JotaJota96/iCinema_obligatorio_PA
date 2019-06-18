@@ -17,6 +17,7 @@ private:
     string sinopsis;
     ICollection* puntuaciones;
     IDictionary* comentarios;
+    IDictionary* funciones;
     IDictionary* cines;
 
 public:

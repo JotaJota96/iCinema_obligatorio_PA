@@ -3,9 +3,10 @@
 DtFuncion::DtFuncion(){
 }
 
-DtFuncion::DtFuncion(int ID,DateTime* FechaYHora,int IDSala){
+DtFuncion::DtFuncion(int ID,DateTime* FechaYHora, float costo, int IDSala){
     this->ID=ID;
     this->FechaYHora=FechaYHora;
+    this->costoEntrada = costo;
     this->idSala=IDSala;
 }
 
@@ -21,11 +22,14 @@ DateTime* DtFuncion::getFechaYHora(){
 int DtFuncion::dtIDSala(){
     return this->idSala;
 }
-
+float DtFuncion::getCosto(){
+    return this->costoEntrada;
+}
 
 std::ostream& operator <<(std::ostream &salida, const DtFuncion &f){
     salida << "ID: " << f.ID << endl;
     salida << "Fecha: " << f.FechaYHora << endl;
+    salida << "Costo: $" << f.costoEntrada<< endl;
     salida << "Sala: " << f.idSala;
     return salida;
 }
