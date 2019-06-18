@@ -1,4 +1,5 @@
 #include "../h/Usuario.h"
+#include <stdexcept>
 
 //----------------------------------------------------------------------------
 // constructor y destructor
@@ -84,6 +85,11 @@ void Usuario::actualizarPuntuacion(string titulo, int puntaje){
     IKey *k = new String(titulo.c_str());
     // obtiene el elemento buscado
     Puntuacion *pt = dynamic_cast<Puntuacion*>(this->puntuaciones->find(k));
+
+    if(pt == NULL){
+        throw std::invalid_argument("No se a puntuado esta pelicula");
+    }
+
     // elimina la clave de busqueda
     delete k;
     // actualiza el puntaje
@@ -92,6 +98,11 @@ void Usuario::actualizarPuntuacion(string titulo, int puntaje){
 
 
 void Usuario::vincularNuevaPuntuacion(Puntuacion *p){
+
+    if(p == NULL){
+        throw std::invalid_argument("La puntuacion es vacia");
+    }
+
     // crea una clave para el nuevo elemento coleccionado
     IKey *k = new String((p->getTitulo()).c_str());
     // agrega a la coleccion

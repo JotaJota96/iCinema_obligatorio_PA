@@ -1,4 +1,5 @@
 #include "../../clases/h/Pelicula.h"
+#include <stdexcept>
 
 Pelicula::Pelicula(){
     this->titulo = "";
@@ -7,6 +8,7 @@ Pelicula::Pelicula(){
     this->puntuaciones = new List();
     this->comentarios = new OrderedDictionary();
     this->cines = new OrderedDictionary();
+    this->funciones = new OrderedDictionary();
 }
 Pelicula::Pelicula(string titulo, string poster, string sinopsis){
     this->titulo = titulo;
@@ -15,6 +17,7 @@ Pelicula::Pelicula(string titulo, string poster, string sinopsis){
     this->puntuaciones = new List();
     this->comentarios = new OrderedDictionary();
     this->cines = new OrderedDictionary();
+    this->funciones = new OrderedDictionary();
 }
 
 Pelicula::~Pelicula(){
@@ -121,33 +124,37 @@ ICollection* Pelicula::obtenerComentarios(){
     }
     delete it;
     return ret;
-
-
-    /*
-    IIterator *it = comentarios->getIterator();
-    ICollection *res = new List();
-
-    while(it->hasCurrent()){
-        Comentario *co = static_cast<Comentario*>(it->getCurrent());
-        DtComentario *dtComentario = co->getDataType();
-        res->add(dtComentario);
-
-        IIterator *it2 = co->obtenerSubComentarios()->getIterator();
-        while (it2->hasCurrent()) {
-            res->add(it2->getCurrent());
-            it2->next();
-        }
-        delete it2;
-        it->next();
-    }
-
-    delete it;
-    return res;
-*/
 }
 
 DtPelicula* Pelicula::getDataType(){
     DtPelicula *dtRes = new DtPelicula(this->titulo,this->poster,this->sinopsis,this->getPuntuacion());
     return dtRes;
 }
+/*
+Funcion* Pelicula::crearFuncion(DateTime fechaYHora, float costoEntrada, Cine *cineActual){
+    int IDFuncion; = Funcion::getNuevoID();
+    Funcion *f = new Funcion(IDFuncion,fechaYHora,costoEntrada)
+    IKey *kf = new Integer(IDFuncion);
+    this->funciones->add(kf,f)
+
+    int IDCine = cineActual->getID();
+    IKey *kc = new Integer(IDCine);
+    if(!(this->funciones->member(kc))){
+        this->funciones->add(cineActual);
+    }
+    return f;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 

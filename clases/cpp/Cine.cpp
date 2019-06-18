@@ -1,4 +1,5 @@
 #include "../h/Cine.h"
+#include <stdexcept>
 
 int Cine::contadorDeCines = 0;
 int Cine::getNuevoID(){
@@ -12,6 +13,11 @@ Cine::Cine(){
 }
 
 Cine::Cine(int ID, Direccion *Dir){
+
+    if(Dir == NULL){
+        throw std::invalid_argument("La direccion es vacia");
+    }
+
     this->id = ID;
     this->Dir = Dir;
     this->misSalas = new OrderedDictionary();
@@ -36,6 +42,11 @@ void Cine::setID(int ID){
 }
 
 void Cine::setDireccion(Direccion *Dir){
+
+    if(Dir == NULL){
+        throw std::invalid_argument("La direccion es vacia");
+    }
+
     this->Dir=Dir;
 }
 
@@ -48,6 +59,11 @@ DtCine *Cine::getDataType(){
 Sala* Cine::obtenerSala(int id){
     IKey *k = new Integer(id);
     Sala *s = (Sala*) this->misSalas->find(k);
+
+    if(s == NULL){
+        throw std::invalid_argument("Esa sala no se encuentra");
+    }
+
     delete k;
     return s;
 }

@@ -1,5 +1,5 @@
 #include "../h/Comentario.h"
-
+#include <stdexcept>
 
 int Comentario::contadorDeComentarios= 0;
 int Comentario::getNuevoID(){
@@ -16,6 +16,11 @@ Comentario::Comentario(){
     this->misSubComentarios = new OrderedDictionary();
 }
 Comentario::Comentario(int id, string texto, int nivelSubComentario, Usuario* usuario){
+
+    if(usuario == NULL){
+        throw std::invalid_argument("El usuario es vacio");
+    }
+
     this->id = id;
     this->texto = texto;
     this->nivelSubComentario = nivelSubComentario;
@@ -73,6 +78,11 @@ bool Comentario::esComentario(int id){
 
 
 void Comentario::vincularUsuario(Usuario* usuario){
+
+    if(usuario == NULL){
+        throw std::invalid_argument("El usuario es vacio");
+    }
+
     this->miUsuario = usuario;
 }
 

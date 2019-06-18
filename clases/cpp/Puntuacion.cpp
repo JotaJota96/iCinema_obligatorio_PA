@@ -1,4 +1,5 @@
 #include "../h/Puntuacion.h"
+#include <stdexcept>
 
 Puntuacion::Puntuacion(){
     this->titulo = "";

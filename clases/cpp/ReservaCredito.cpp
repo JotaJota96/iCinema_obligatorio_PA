@@ -1,4 +1,5 @@
 #include "../h/ReservaCredito.h"
+#include <stdexcept>
 
 ReservaCredito::ReservaCredito()
     :Reserva(){

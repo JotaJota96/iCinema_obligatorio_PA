@@ -1,4 +1,5 @@
 #include "clases\h\Reserva.h"
+#include <stdexcept>
 
 int Reserva::contadorDeReservas = 0;
 int Reserva::getNuevoID(){

@@ -1,5 +1,5 @@
 #include "../h/Sala.h"
-
+#include <stdexcept>
 
 int Sala::contadorDeSalas= 0;
 int Sala::getNuevoID(){
@@ -15,6 +15,11 @@ Sala::Sala(){
 }
 
 Sala::Sala(int Numero,int Capacidad, Cine *miCine){
+
+    if(miCine == NULL){
+        throw std::invalid_argument("El cine es vacio");
+    }
+
     this->numero = Numero;
     this->capacidad = Capacidad;
     this->miCine = miCine;
