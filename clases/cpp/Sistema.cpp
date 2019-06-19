@@ -82,7 +82,17 @@ void Sistema::setIdSalaActual(int _idSalaActual){
 }
 
 //======================= OPERACIONES DEL CONTROLADOR SISTEMA ===========================================
-
+void Sistema::cerrarSesion(){
+    this->rolActual = INVITADO;
+    this->usuarioActual = NULL;
+    this->peliculaActual = NULL;
+    this->cineActual = NULL;
+    this->peliculaActual = NULL;
+    this->idSalaActual = 0;
+    this->idFuncionActual = 0;
+    this->idComentarioActual = 0;
+    this->DtNuevaReserva = NULL;
+}
 void Sistema::cancelarEliminarPelicula(){  //Terminada Verificar
     this->peliculaActual = NULL;
 }
@@ -282,10 +292,9 @@ void Sistema::puntuarPelicula(int puntaje){             //Terminada Verificar
 }
 
 DtCine * Sistema::seleccionarCine(int idCine){     //Terminada Verificar
-    DtCine * cine = new DtCine();
     IKey * k = new Integer(idCine);
-    Cine * c = dynamic_cast<Cine*>(DicCines->find(k));
-    cine = c->getDataType();
+    cineActual = dynamic_cast<Cine*>(DicCines->find(k));
+    DtCine * cine = cineActual->getDataType();
     delete k;
     return  cine;
 }
@@ -366,6 +375,9 @@ void Sistema::cargarDatosDePrueba(){
     c3->agregarSala(70);
     c3->agregarSala(80);
     c3->agregarSala(90);
+    this->DicCines->add(new Integer(c1->getID()), c1);
+    this->DicCines->add(new Integer(c2->getID()), c2);
+    this->DicCines->add(new Integer(c3->getID()), c3);
 
 
     // Pelicula *peli# = new Pelicula('pelicula_#?', 'poster_#?', 'sinopsis_#?');

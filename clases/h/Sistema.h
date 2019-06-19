@@ -59,6 +59,7 @@ public:
     void setIdSalaActual(int _idSalaActual);
 
     //==================== OPERACIONES ==========================
+    void cerrarSesion();
     void cancelarEliminarPelicula();
     void cancelarNuevaReserva() ;
     void cancelarNuevoCine() ;

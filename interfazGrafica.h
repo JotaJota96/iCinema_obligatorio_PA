@@ -94,6 +94,7 @@ bool cargarMenuUsuario(){
         cout << "3- Comentar pelicula" << endl;
         cout << "4- Ver Info de Pelicula" << endl;
         cout << "5- Ver comentarios y puntaje de pelicula" << endl;
+        cout << "6- Cerrar sesion" << endl;
         cout << "0- Salir..." << endl;
         opcion = ingresarInt("Ingrese una opcion: ");
 
@@ -113,6 +114,9 @@ bool cargarMenuUsuario(){
         case 5: // Ver comentarios y puntaje de pelicula
             verComentariosYPuntajeDePelicula();
             break;
+        case 6:
+            sis->cerrarSesion();
+            return false;
         }
     }
     return true;
@@ -125,6 +129,7 @@ bool cargarMenuAdministrador(){
         cout << "1- Alta cine" << endl;
         cout << "2- Alta funcion" << endl;
         cout << "3- Eliminar pelicula" << endl;
+        cout << "4- Cerrar sesion" << endl;
         cout << "0- Salir..." << endl;
         opcion = ingresarInt("Ingrese una opcion: ");
 
@@ -138,6 +143,9 @@ bool cargarMenuAdministrador(){
         case 3: // Eliminar pelicula
             eliminarPelicula();
             break;
+        case 4:
+            sis->cerrarSesion();
+            return false;
         }
     }
     return true;
@@ -219,12 +227,21 @@ void altaFuncion(){
         // lista peliculas
         ICollection *colPeliculas = sis->listarPeliculas();
         IIterator *it = colPeliculas->getIterator();
-        while(it->hasCurrent()){
-            cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
-            it->next();
+        if (!colPeliculas->isEmpty()){
+            while(it->hasCurrent()){
+                cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
+                it->next();
+            }
+            mostrarTitulo("-");
+            delete it;
+            delete colPeliculas;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete it;
-        delete colPeliculas;
+
 
         string tituloPelicula = ingresarString("Seleccione una pelicula: ");
         sis->seleccionarPelicula(tituloPelicula);
@@ -236,14 +253,23 @@ void altaFuncion(){
             mostrarTitulo("Lista de cines");
 
             //listar cines
-            ICollection *colCines = sis->listarCines();
+            ICollection *colCines = sis->listarTodosLosCines();
             it = colCines->getIterator();
-            while(it->hasCurrent()){
-                cout << *(dynamic_cast<DtCine*>(it->getCurrent())) << endl << endl;
-                it->next();
+            if (!colCines->isEmpty()){
+                while(it->hasCurrent()){
+                    cout << *(dynamic_cast<DtCine*>(it->getCurrent())) << endl << endl;
+                    it->next();
+                }
+                mostrarTitulo("-");
+                delete it;
+                delete colCines;
+            }else{
+                cout << "No hay elementos en la lista" << endl;
+                mostrarTitulo("-");
+                pausa();
+                return;
             }
-            delete it;
-            delete colCines;
+
 
             //seleccionar cine
             int idCine = ingresarInt("Seleccione un cine: ");
@@ -256,12 +282,20 @@ void altaFuncion(){
             //listar salas
             ICollection *colSalas = sis->listarSalas();
             it = colSalas->getIterator();
-            while(it->hasCurrent()){
-                cout << *(dynamic_cast<DtSala*>(it->getCurrent())) << endl << endl;
-                it->next();
+            if (!colSalas->isEmpty()){
+                while(it->hasCurrent()){
+                    cout << *(dynamic_cast<DtSala*>(it->getCurrent())) << endl << endl;
+                    it->next();
+                }
+                mostrarTitulo("-");
+                delete it;
+                delete colSalas;
+            }else{
+                cout << "No hay elementos en la lista" << endl;
+                mostrarTitulo("-");
+                pausa();
+                return;
             }
-            delete it;
-            delete colSalas;
 
             //listar salas ocupadas
             ICollection *colSalasOcupadas = sis->listarSalasOcupadas(new DateTime());
@@ -270,6 +304,7 @@ void altaFuncion(){
                 cout << *(dynamic_cast<DtFuncion*>(it->getCurrent())) << endl << endl;
                 it->next();
             }
+            mostrarTitulo("-");
             delete it;
             delete colSalasOcupadas;
 
@@ -315,13 +350,22 @@ void crearReserva(){
             DtPelicula* dtP;
             col = sis->listarPeliculas();
             it = col->getIterator();
-            while(it->hasCurrent()){
-                dtP = static_cast<DtPelicula*>(it->getCurrent());
-                cout << dtP->getTitulo() << endl;
-                it->next();
+            if (!col->isEmpty()){
+                while(it->hasCurrent()){
+                    dtP = static_cast<DtPelicula*>(it->getCurrent());
+                    cout << dtP->getTitulo() << endl;
+                    it->next();
+                }
+                mostrarTitulo("-");
+                delete col;
+                delete it;
+            }else{
+                cout << "No hay elementos en la lista" << endl;
+                mostrarTitulo("-");
+                pausa();
+                return;
             }
-            delete col;
-            delete it;
+
 
             seleccionoPelicula = ingresarBool("Desea seleccionar una pelicula? ");
             if ( seleccionoPelicula){
@@ -341,13 +385,22 @@ void crearReserva(){
                     DtCine* dtC;
                     col = sis->listarCines();
                     it = col->getIterator();
-                    while(it->hasCurrent()){
-                        dtC = static_cast<DtCine*>(it->getCurrent());
-                        cout << *dtC << endl << endl;
-                        it->next();
+                    if (!col->isEmpty()){
+                        while(it->hasCurrent()){
+                            dtC = static_cast<DtCine*>(it->getCurrent());
+                            cout << *dtC << endl << endl;
+                            it->next();
+                        }
+                        mostrarTitulo("-");
+                        delete col;
+                        delete it;
+                    }else{
+                        cout << "No hay elementos en la lista" << endl;
+                        mostrarTitulo("-");
+                        pausa();
+                        return;
                     }
-                    delete col;
-                    delete it;
+
 
                     seleccionoCine = ingresarBool("Desea seleccionar un cine?");
                     if (seleccionoCine){
@@ -361,13 +414,21 @@ void crearReserva(){
                         DtFuncion* dtF;
                         col = sis->listarFunciones(new DateTime()); // por defecto tiene la fecha y hora actual
                         it = col->getIterator();
-                        while(it->hasCurrent()){
-                            dtF = static_cast<DtFuncion*>(it->getCurrent());
-                            cout << *dtF << endl << endl;
-                            it->next();
+                        if (!col->isEmpty()){
+                            while(it->hasCurrent()){
+                                dtF = static_cast<DtFuncion*>(it->getCurrent());
+                                cout << *dtF << endl << endl;
+                                it->next();
+                            }
+                            mostrarTitulo("-");
+                            delete col;
+                            delete it;
+                        }else{
+                            cout << "No hay elementos en la lista" << endl;
+                            mostrarTitulo("-");
+                            pausa();
+                            return;
                         }
-                        delete col;
-                        delete it;
 
                         seleccionoFuncion = ingresarBool("Desea seleccionar una funcion? ");
                         if(seleccionoFuncion){
@@ -443,12 +504,21 @@ void puntuarPelicula(){
         DtPelicula* dtP;
         ICollection* colP = sis->listarPeliculas();
         IIterator* it = colP->getIterator();
-        while(it->hasCurrent()){
-            dtP = static_cast<DtPelicula*>(it->getCurrent());
-            cout << *dtP << endl << endl;
-            it->next();
+        if (!colP->isEmpty()){
+            while(it->hasCurrent()){
+                dtP = static_cast<DtPelicula*>(it->getCurrent());
+                cout << *dtP << endl << endl;
+                it->next();
+            }
+            mostrarTitulo("-");
+            delete colP;
+            delete it;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete colP;
 
         string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
         sis->seleccionarPelicula(titulo);
@@ -483,11 +553,19 @@ void comentarPelicula(){
         // listado de peliculas
         ICollection *colPeliculas = sis->listarPeliculas();
         IIterator *it = colPeliculas->getIterator();
-        while(it->hasCurrent()){
-            cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
+        if (!colPeliculas->isEmpty()){
+            while(it->hasCurrent()){
+                cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
+            }
+            mostrarTitulo("-");
+            delete it;
+            delete colPeliculas;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete it;
-        delete colPeliculas;
 
         //seleccionar
         string tituloPelicula = ingresarString("Seleccione una pelicula: ");
@@ -500,11 +578,20 @@ void comentarPelicula(){
         //listar comentarios
         ICollection *colComentarios = sis->listarComentarios();
         it = colComentarios ->getIterator();
-        while(it->hasCurrent()){
-            cout << *(dynamic_cast<DtComentario*>(it->getCurrent())) << endl;
+        if (!colComentarios->isEmpty()){
+            while(it->hasCurrent()){
+                cout << *(dynamic_cast<DtComentario*>(it->getCurrent())) << endl;
+            }
+            mostrarTitulo("-");
+            delete it;
+            delete colComentarios;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete it;
-        delete colComentarios;
+
 
         // el usuario debe elegir si quiere comentar la pelicula o comentar un comentario
         while (true){
@@ -535,12 +622,22 @@ void eliminarPelicula(){
         DtPelicula* dtP;
         ICollection* colP = sis->listarPeliculas();
         IIterator* it = colP->getIterator();
-        while(it->hasCurrent()){
-            dtP = static_cast<DtPelicula*>(it->getCurrent());
-            cout << dtP->getTitulo() << endl;
-            it->next();
+        if (!colP->isEmpty()){
+            while(it->hasCurrent()){
+                dtP = static_cast<DtPelicula*>(it->getCurrent());
+                cout << dtP->getTitulo() << endl;
+                it->next();
+            }
+            mostrarTitulo("-");
+            delete colP;
+            delete it;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete colP;
+
 
         string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
         sis->seleccionarPelicula(titulo);
@@ -576,13 +673,21 @@ void verInfoDePelicula(){
             DtPelicula* dtP;
             col = sis->listarPeliculas();
             it = col->getIterator();
-            while(it->hasCurrent()){
-                dtP = static_cast<DtPelicula*>(it->getCurrent());
-                cout << dtP->getTitulo() << endl;
-                it->next();
+            if (!col->isEmpty()){
+                while(it->hasCurrent()){
+                    dtP = static_cast<DtPelicula*>(it->getCurrent());
+                    cout << dtP->getTitulo() << endl;
+                    it->next();
+                }
+                mostrarTitulo("-");
+                delete col;
+                delete it;
+            }else{
+                cout << "No hay elementos en la lista" << endl;
+                mostrarTitulo("-");
+                pausa();
+                return;
             }
-            delete col;
-            delete it;
 
             seleccionoPelicula = ingresarBool("Desea seleccionar una pelicula? ");
             if ( seleccionoPelicula){
@@ -603,13 +708,22 @@ void verInfoDePelicula(){
                     DtCine* dtC;
                     col = sis->listarCines();
                     it = col->getIterator();
-                    while(it->hasCurrent()){
-                        dtC = static_cast<DtCine*>(it->getCurrent());
-                        cout << *dtC << endl << endl;
-                        it->next();
+                    if (!col->isEmpty()){
+                        while(it->hasCurrent()){
+                            dtC = static_cast<DtCine*>(it->getCurrent());
+                            cout << *dtC << endl << endl;
+                            it->next();
+                        }
+                        mostrarTitulo("-");
+                        delete col;
+                        delete it;
+                    }else{
+                        cout << "No hay elementos en la lista" << endl;
+                        mostrarTitulo("-");
+                        pausa();
+                        return;
                     }
-                    delete col;
-                    delete it;
+
 
                     seleccionoCine = ingresarBool("Desea seleccionar un cine?");
                     if (seleccionoCine){
@@ -623,13 +737,22 @@ void verInfoDePelicula(){
                         DtFuncion* dtF;
                         col = sis->listarFunciones(new DateTime()); // por defecto tiene la fecha y hora actual
                         it = col->getIterator();
-                        while(it->hasCurrent()){
-                            dtF = static_cast<DtFuncion*>(it->getCurrent());
-                            cout << *dtF << endl << endl;
-                            it->next();
+                        if (!col->isEmpty()){
+                            while(it->hasCurrent()){
+                                dtF = static_cast<DtFuncion*>(it->getCurrent());
+                                cout << *dtF << endl << endl;
+                                it->next();
+                            }
+                            mostrarTitulo("-");
+                            delete col;
+                            delete it;
+                        }else{
+                            cout << "No hay elementos en la lista" << endl;
+                            mostrarTitulo("-");
+                            pausa();
+                            return;
                         }
-                        delete col;
-                        delete it;
+
 
                         // aca no pongo pausa porque mas abajo hay un ingreso de datos
                         sis->cancelarVerInformacionDePelicula();
@@ -660,15 +783,24 @@ void verComentariosYPuntajeDePelicula(){
         DtPelicula* dtP;
         ICollection* colP = sis->listarPeliculas();
         IIterator* it = colP->getIterator();
-        while(it->hasCurrent()){
-            dtP = static_cast<DtPelicula*>(it->getCurrent());
-            cout << "Titulo: " << dtP->getTitulo() << endl;
-            cout << "Poster: " << dtP->getPoster() << endl;
-            cout << endl;
-            it->next();
+        if (!colP->isEmpty()){
+            while(it->hasCurrent()){
+                dtP = static_cast<DtPelicula*>(it->getCurrent());
+                cout << "Titulo: " << dtP->getTitulo() << endl;
+                cout << "Poster: " << dtP->getPoster() << endl;
+                cout << endl;
+                it->next();
+            }
+            mostrarTitulo("-");
+            delete colP;
+            delete it;
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete colP;
-        delete it;
+
 
         string titulo = ingresarString("Ingrese el titulo de la pelicula: ");
         dtP = sis->seleccionarPelicula(titulo);
@@ -681,13 +813,22 @@ void verComentariosYPuntajeDePelicula(){
 
         ICollection* colC = sis->listarComentarios();
         it = colC->getIterator();
-        while(it->hasCurrent()){
-            DtComentario* dtC = static_cast<DtComentario*>(it->getCurrent());
-            cout << *dtC << endl;
-            it->next();
+        if (!colC->isEmpty()){
+            while(it->hasCurrent()){
+                DtComentario* dtC = static_cast<DtComentario*>(it->getCurrent());
+                cout << *dtC << endl;
+                it->next();
+            }
+            mostrarTitulo("-");
+            delete colC;
+            pausa();
+        }else{
+            cout << "No hay elementos en la lista" << endl;
+            mostrarTitulo("-");
+            pausa();
+            return;
         }
-        delete colC;
-        pausa();
+
 
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
