@@ -73,7 +73,9 @@ void OrderedDictionary::remove(IKey *k){
     // busca el elemento a borrar y lo pone en current
     while(current != NULL)
     {
-        comparision = key->compare(current->getKey());
+        //comparision = key->compare(current->getKey());
+        comparision = current->getKey()->compare(key);
+
         if(comparision == EQUAL)  // la clave ya está, se puede borrar
             break;
         
@@ -125,15 +127,15 @@ ICollectible *OrderedDictionary::find(IKey *k) const{
         throw std::invalid_argument("Se esperaba un OrderedKey");
     
     for(OrderedDictionaryEntry *current = root; current != NULL;){
-        ComparisonRes comp = key->compare(current->getKey());
+        //ComparisonRes comp = key->compare(current->getKey());
+        ComparisonRes comp = current->getKey()->compare(key);
         if(comp == EQUAL)
            return current->getVal();
-        else if(comp == GREATER)
+        else if(comp == LESSER)
             current = current->getLesser();
         else
             current = current->getGreater();
     }
-    
     return NULL;
 }
 

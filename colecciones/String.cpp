@@ -18,10 +18,10 @@ ComparisonRes String::compare(OrderedKey* k) const
     if(str == NULL) 
         throw std::invalid_argument("Invalid key k");
     
-    int cmp = strcmp(s, str->s);
+    int cmp = strcmp(str->s, s);
     if(cmp == 0)
         return EQUAL;
-    else if(cmp < 0)
+    else if(cmp > 0)
         return GREATER;
     else
         return LESSER;
