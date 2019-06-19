@@ -2,10 +2,29 @@
 #include "clases/h/ISistema.h"
 
 
-Sistema::Sistema(){} //Constructor por defecto
+Sistema::Sistema(){ //Constructor por defecto
+    this->financieras["CREDITEL"] = 10.0;
+    this->financieras["OCA"] = 15.0;
+    this->financieras["FUCAC"] = 8.5;
+    this->financieras["CREDITO DE LA CASA"] = 12.0;
+    this->financieras["CASH"] = 12.0;
+    this->financieras["PRONTO"] = 11.0;
+    this->financieras["ANDA"] = 10.0;
+    this->financieras["COPAC"] = 12.0;
+    this->financieras["MARCRE"] = 5.0;
+}
 
 Sistema::Sistema(Usuario * _usuarioActual){  //Constructor con sobrecargado
     this->usuarioActual = _usuarioActual;
+    this->financieras["CREDITEL"] = 10.0;
+    this->financieras["OCA"] = 15.0;
+    this->financieras["FUCAC"] = 8.5;
+    this->financieras["CREDITO DE LA CASA"] = 12.0;
+    this->financieras["CASH"] = 12.0;
+    this->financieras["PRONTO"] = 11.0;
+    this->financieras["ANDA"] = 10.0;
+    this->financieras["COPAC"] = 12.0;
+    this->financieras["MARCRE"] = 5.0;
 }
 
 Sistema * Sistema::instancia = 0;
@@ -23,7 +42,6 @@ Cine * Sistema::getCineActual(){
 Usuario * Sistema::getUsuarioActual(){
     return this->usuarioActual;
 }
-
 
 Pelicula * Sistema::getPeliculaActual(){
     return this->peliculaActual;
@@ -53,7 +71,6 @@ void Sistema::setPeliculaActual(Pelicula * _peliculaActual){
     this->peliculaActual = _peliculaActual;
 }
 
-
 void Sistema::setIdComentarioActual(int _idComentarioActual){
     this->idComentarioActual = _idComentarioActual;
 }
@@ -67,21 +84,26 @@ void Sistema::setIdSalaActual(int _idSalaActual){
 
 //======================= OPERACIONES DEL CONTROLADOR SISTEMA ===========================================
 
-void Sistema::cancelarEliminarPelicula(){
-
+void Sistema::cancelarEliminarPelicula(){  //Terminada Verificar
+    this->peliculaActual = NULL;
 }
 
-void Sistema::cancelarNuevaReserva(){
-
+void Sistema::cancelarNuevaReserva(){     //Terminada Verificar
+    delete this->DtNuevaReserva;
+    this->idFuncionActual = 0;
+    this->peliculaActual = NULL;
+    this->cineActual = NULL;
 }
-void Sistema::cancelarNuevoCine(){
-
+void Sistema::cancelarNuevoCine(){        //Terminada Verificar
+    this->cineActual->eliminarSalas();
+    delete cineActual;
 }
-void Sistema::cancelarVerComentariosYPuntajes(){
-
+void Sistema::cancelarVerComentariosYPuntajes(){   //Terminada Verificar
+    this->peliculaActual = NULL;
 }
-void Sistema::cancelarVerInformacionDePelicula(){
-
+void Sistema::cancelarVerInformacionDePelicula(){  //Terminada Verificar
+    this->peliculaActual = NULL;
+    this->cineActual = NULL;
 }
 void Sistema::comentarComentario(string){
 
@@ -89,8 +111,20 @@ void Sistema::comentarComentario(string){
 void Sistema::comentarPelicula(string){
 
 }
-void Sistema::confirmarEliminarPelicula(){
-
+void Sistema::confirmarEliminarPelicula(){           // Terminada Verificar
+    string titulo = peliculaActual->getTitulo();
+    IIterator * it = DicUsuarios->getIterator();
+    while (it->hasCurrent()) {
+        dynamic_cast<Usuario *>(it->getCurrent())->eliminarLinkAPuntuacion(titulo);
+        it->next();
+    }
+    delete it;
+    this->peliculaActual->eiminarLinks();
+    IKey * k = new String(titulo.c_str());
+    delete peliculaActual;
+    DicPeliculas->remove(k);
+    delete k;
+    peliculaActual = NULL;
 }
 void Sistema::confirmarNuevaReserva(){
 
@@ -98,111 +132,169 @@ void Sistema::confirmarNuevaReserva(){
 void Sistema::confirmarNuevoCine(){
 
 }
-bool Sistema::iniciarSesion(string nickname, string password){
-    //Falta el Codigo
-    bool valor = true;
-    return valor;
+bool Sistema::iniciarSesion(string nickname, string password){ //Terminada Verificar
+    bool res; //Respuesta booleana
+    //Crea una clave para realizar la busqueda
+    IKey * k = new String(nickname.c_str());
+    //Obtiene el usuario si existe
+    Usuario * u = dynamic_cast<Usuario *>(this->DicUsuarios->find(k));
+    delete k;
+    if(u != NULL ){
+        if(u->validarContrasenia(password)){
+            this->usuarioActual = u;
+            res = true;
+        }else {
+            res = false;
+        }
+    }else {
+        res = false;
+    }
+    return res;
 }
 
-List * Sistema::listarCines(){ //Retorna una lista con DtCines
-    List * cines = new List();
-    //Falta el codigo
-    return cines;
+ICollection* Sistema::listarCines(){        // Terminada Verificar
+    return this->peliculaActual->obtenerCines();
 }
 
-List * Sistema::listarComentarios(){ //Retorna una lista con DtComentario
-    List * comentarios = new List();
-    //Falta el codigo
+ICollection * Sistema::listarComentarios(){ // Terminada Verificar
+    ICollection * comentarios = new List();
+    comentarios = this->peliculaActual->obtenerComentarios();
     return comentarios;
 }
 
-List * Sistema::listarFunciones(DateTime* fechaActual){ //Retorna una lista con DTFuncion
-    List * funciones = new List();
-    //Falta el codigo
-    return funciones;
+ICollection * Sistema::listarFunciones(DateTime* fechaActual){ // Terminada Verificar
+    int idCineActual = this->cineActual->getID();
+    return this->peliculaActual->obtenerFunciones(fechaActual, idCineActual);
 }
 
-List * Sistema::listarPeliculas(){ //Retorna una lista con DtPelicula
-    List * peliculas = new List();
-    //Falta el codigo
-    return peliculas;
+ICollection* Sistema::listarPeliculas(){     // Terminada Verificar
+    ICollection * res = new List();
+    IIterator * it = DicPeliculas->getIterator();
+    while (it->hasCurrent()) {
+        DtPelicula * p = dynamic_cast<Pelicula *>(it->getCurrent())->getDataType();
+        res->add(p);
+        it->next();
+    }
+    delete it;
+    return res;
 }
-List * Sistema::listarSalas(){ //Retorna un lista con DtSala
-    List * salas = new List();
-    //Falta el codigo
-    return salas;
-}
-
-List * Sistema::listarSalasOcupadas(DateTime * fechaActual){ //Retrona una lista con DtFuncion
-    List * funciones = new List();
-    //Falta el codigo
-    return funciones;
+ICollection * Sistema::listarSalas(){ //Terminada Verificar
+    return this->cineActual->listarSalas();
 }
 
-List * Sistema::listarTodosLosCines(){ //Retrona una lista con DtCine
-    List * cines = new List();
-    //Falta el codigo
-    return cines;
-}
-void Sistema::nuevaFuncion(DateTime* fechaYHora, float costoEntrada){
-
-}
-void Sistema::nuevaReserva(int cantAsientos){
-
-}
-void Sistema::nuevaSala(int capacidad){
-
-}
-void Sistema::nuevoCine(Direccion* direccion){
-
-}
-
-int Sistema::obtenerPuntajeDadoPorUsuario(){
-    //Falta el codigo
-    return 0;
+ICollection * Sistema::listarSalasOcupadas(DateTime * fechaActual){ //Terminada Verifiar
+    int idCineActual = cineActual->getID();
+    ICollection * ret = new List();
+    IIterator * it2;
+    IIterator * it = DicPeliculas->getIterator();
+    while (it->hasCurrent()) {
+       Pelicula* p = dynamic_cast<Pelicula*>(it->getCurrent());
+       it2 = p->obtenerFunciones(fechaActual,idCineActual)->getIterator();
+       while (it2->hasCurrent()) {
+           ret->add(it2->getCurrent());
+           it2->next();
+       }
+       delete it2;
+       it->next();
+    }
+    delete it;
+    return ret;
 }
 
-float Sistema::pagoCredito(string nombreFinanciera){
-    float costo = 1.0;
-    //Falta el codigo
-    return costo;
+ICollection* Sistema::listarTodosLosCines(){ // Terminada Verificar
+    ICollection * ret = new List();
+    IIterator * it = DicCines->getIterator();
+    while (it->hasCurrent()) {
+        ret->add(dynamic_cast<Cine *>(it->getCurrent())->getDataType());
+        it->next();
+    }
+    delete it;
+    return ret;
+}
+void Sistema::nuevaFuncion(DateTime* fechaYHora, float costoEntrada){ // Terminada Verificar
+    Funcion * f = this->peliculaActual->crearFuncion(fechaYHora,costoEntrada,this->cineActual);
+    Sala * s = this->cineActual->obtenerSala(this->idSalaActual);
+    f->asignarSala(s);
+}
+
+void Sistema::nuevaReserva(int _cantAsientos){          //Terminada Verificar
+    this->cantAsientos = _cantAsientos;
+}
+
+void Sistema::nuevaSala(int _capacidad){                //Terminada Verificar
+    this->cineActual->agregarSala(_capacidad);
+}
+
+void Sistema::nuevoCine(Direccion* _direccion){         //Terminada Verificar
+    int id = Cine::getNuevoID();
+    Cine * nuevoCine = new Cine(id , _direccion);
+    cineActual = nuevoCine;      //Crea el link a cineActual
+    IKey * k = new Integer(id);
+    DicCines->add(k,nuevoCine); //Agregar el nuevo cine al Diccionario
+}
+
+int Sistema::obtenerPuntajeDadoPorUsuario(){            //Termianda Verificar
+    string titulo = this->peliculaActual->getTitulo();
+    int puntaje = usuarioActual->obtenerPuntajeDado(titulo);
+    return puntaje;
+}
+
+float Sistema::pagoCredito(string nombreFinanciera){   //Terminada Falta verificar el descuento
+    float costoFuncion = this->peliculaActual->getCostoDeFuncion(this->idFuncionActual);
+    float costo = float(cantAsientos * costoFuncion);
+    this->DtNuevaReserva = new DtReservaCredito(this->idFuncionActual, cantAsientos , costo,reservaCredito, nombreFinanciera, 10 );
+    return financieras[nombreFinanciera];
 }
 void Sistema::pagoDebito(string nombreBanco){
-
+    float costoFuncion = this->peliculaActual->getCostoDeFuncion(this->idFuncionActual);
+    float costo = float(cantAsientos * costoFuncion);
+    this->DtNuevaReserva = new DtReservaDebito(this->idFuncionActual, cantAsientos, costo, reservaDebito, nombreBanco);   //Terminada verificar
 }
 
-void Sistema::puntuarPelicula(int puntaje){
-
+void Sistema::puntuarPelicula(int puntaje){             //Terminada Verificar
+    string titulo = this->peliculaActual->getTitulo();
+    bool ok = this->usuarioActual->yaPuntuoPelicula(titulo);
+    if(ok)
+        this->usuarioActual->actualizarPuntuacion(titulo, puntaje);
+    else {
+        Puntuacion * nuevaPuntuacion = new Puntuacion(titulo,puntaje);
+        this->usuarioActual->vincularNuevaPuntuacion(nuevaPuntuacion);
+    }
 }
-DtCine * Sistema::seleccionarCine(int idCine){
+
+DtCine * Sistema::seleccionarCine(int idCine){     //Terminada Verificar
     DtCine * cine = new DtCine();
-    //Falta el codigo
+    IKey * k = new Integer(idCine);
+    Cine * c = dynamic_cast<Cine*>(DicCines->find(k));
+    cine = c->getDataType();
+    delete k;
     return  cine;
 }
 
-void Sistema::seleccionarComentario(int id){
-
+void Sistema::seleccionarComentario(int id){          //Terminada Verificar
+    this->idComentarioActual = id;
 }
 
-DtFuncion * Sistema::seleccionarFuncion(int id){
-    DtFuncion * funcion = new DtFuncion();
-    //Falta el codigo
-    return funcion;
+DtFuncion * Sistema::seleccionarFuncion(int id){        //Terminada Verificar
+    this->idFuncionActual = id;
+    return this->peliculaActual->obtenerDtFuncion(id);
 }
-DtPelicula * Sistema::seleccionarPelicula(string titulo){
-    DtPelicula * pelicula = new DtPelicula();
-    //Falta el codigo
-    return pelicula;
-}
-void Sistema::seleccionarSala(int idSala){
-
+DtPelicula * Sistema::seleccionarPelicula(string titulo){  //Terminada Verificar
+    IKey * k = new String(titulo.c_str());
+    Pelicula * p = dynamic_cast<Pelicula*>(DicPeliculas->find(k));
+    this->peliculaActual = p;
+    return p->getDataType();
 }
 
-DtReserva * Sistema::vistaPreviaDeReserva(){
-    DtReserva * reserva = new DtReservaCredito();
-    return reserva;
+void Sistema::seleccionarSala(int idSala){          //Terminada Verificiar
+    this->idSalaActual = idSala;
+}
+
+DtReserva * Sistema::vistaPreviaDeReserva(){         //Terminada Verificar
+        return this->DtNuevaReserva;
 }
 
 Sistema::~Sistema(){ //Destructor
 
 }
+

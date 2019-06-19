@@ -36,6 +36,7 @@ public:
     bool yaPuntuoPelicula(string titulo);
     void actualizarPuntuacion(string titulo, int puntaje);
     void vincularNuevaPuntuacion(Puntuacion *p);
+    bool validarContrasenia(string contrasenia);
     void eliminarLinkAPuntuacion(string titulo);
 };
 

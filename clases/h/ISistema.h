@@ -9,7 +9,8 @@
 #include "datatypes/h/DtPelicula.h"
 #include "datatypes/h/DateTime.h"
 #include "datatypes/h/Direccion.h"
-#include "colecciones/collections/List.h"
+#include "colecciones/interfaces/ICollection.h"
+#include "colecciones/interfaces/IDictionary.h"
 
 using namespace std;
 
@@ -29,13 +30,13 @@ public:
      virtual void confirmarNuevaReserva() = 0;
      virtual void confirmarNuevoCine() = 0;
      virtual bool iniciarSesion(string nickname, string password) = 0;
-     virtual List * listarCines() = 0;                        //Retorna una lista con DtCines
-     virtual List * listarComentarios() = 0;                  //Retorna una lista con DtComentario
-     virtual List * listarFunciones(DateTime* fechaActual) = 0; //Retorna una lista con DTFuncion
-     virtual List * listarPeliculas() = 0;                        //Retorna una lista con DtPelicula
-     virtual List * listarSalas() = 0;                            //Retorna un lista con DtSala
-     virtual List * listarSalasOcupadas(DateTime* fechaActual) = 0; //Retrona una lista con DtFuncion
-     virtual List * listarTodosLosCines() = 0;                    //Retrona una lista con DtCine
+     virtual ICollection * listarCines() = 0;                        //Retorna una lista con DtCines
+     virtual ICollection * listarComentarios() = 0;                  //Retorna una lista con DtComentario
+     virtual ICollection * listarFunciones(DateTime* fechaActual) = 0; //Retorna una lista con DTFuncion
+     virtual ICollection * listarPeliculas() = 0;                        //Retorna una lista con DtPelicula
+     virtual ICollection * listarSalas() = 0;                            //Retorna un lista con DtSala
+     virtual ICollection * listarSalasOcupadas(DateTime* fechaActual) = 0; //Retrona una lista con DtFuncion
+     virtual ICollection * listarTodosLosCines() = 0;                    //Retrona una lista con DtCine
      virtual void nuevaFuncion(DateTime* fechaYHora, float costoEntrada) = 0;
      virtual void nuevaReserva(int cantAsientos) = 0;
      virtual void nuevaSala(int capacidad) = 0;

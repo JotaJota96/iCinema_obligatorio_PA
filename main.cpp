@@ -25,8 +25,7 @@ void pruebaDePelicula();
 int main(){
     //interfazGrafica();
     try {
-        cargarDatosDePrueba();
-        pruebaDePelicula();
+        interfazGrafica();
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }

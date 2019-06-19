@@ -110,6 +110,9 @@ void Usuario::vincularNuevaPuntuacion(Puntuacion *p){
     // no se debe borrar la k, ya que es a esta instancia a la cual queda referenciando la coleccion
 }
 
+bool Usuario::validarContrasenia(string contrasenia){
+    return this->contrasenia == contrasenia;
+}
 
 void Usuario::eliminarLinkAPuntuacion(string titulo){
     // crea la clave para identificar al elemento

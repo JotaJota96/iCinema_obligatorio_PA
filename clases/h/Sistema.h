@@ -4,9 +4,15 @@
 #include "Cine.h"
 #include "Usuario.h"
 #include "Pelicula.h"
+#include "Funcion.h"
+#include "Sala.h"
+
+#include <map>
+class Pelicula;
+class Cine;
+class Usuario;
 
 //Controlador Sistema (Singleton)
-
 class Sistema:public ISistema{
 public:
 
@@ -39,13 +45,13 @@ public:
     void confirmarNuevaReserva() ;
     void confirmarNuevoCine() ;
     bool iniciarSesion(string nickname, string password);
-    List* listarCines() ;                            //Retorna una lista con DtCines
-    List* listarComentarios() ;                      //Retorna una lista con DtComentario
-    List* listarFunciones(DateTime* fechaActual) ;    //Retorna una lista con DTFuncion
-    List* listarPeliculas() ;                        //Retorna una lista con DtPelicula
-    List* listarSalas() ;                            //Retorna un lista con DtSala
-    List* listarSalasOcupadas(DateTime* fechaActual) ;//Retrona una lista con DtFuncion
-    List* listarTodosLosCines() ;                    //Retrona una lista con DtCine
+    ICollection* listarCines() ;                            //Retorna una lista con DtCines
+    ICollection* listarComentarios() ;                      //Retorna una lista con DtComentario
+    ICollection* listarFunciones(DateTime* fechaActual) ;    //Retorna una lista con DTFuncion
+    ICollection* listarPeliculas() ;                        //Retorna una lista con DtPelicula
+    ICollection* listarSalas() ;                            //Retorna un lista con DtSala
+    ICollection* listarSalasOcupadas(DateTime* fechaActual) ;//Retrona una lista con DtFuncion
+    ICollection* listarTodosLosCines() ;                    //Retrona una lista con DtCine
     void nuevaFuncion(DateTime* fechaYHora, float costoEntrada) ;
     void nuevaReserva(int cantAsientos) ;
     void nuevaSala(int capacidad) ;
@@ -65,13 +71,19 @@ private:
     Sistema();
     Sistema(Usuario * _usuarioActual);
     static Sistema * instancia;
-
     Cine * cineActual;
     Pelicula * peliculaActual;
     Usuario * usuarioActual;
     int idComentarioActual;
     int idFuncionActual;
     int idSalaActual;
+    int cantAsientos;
+    DtReserva * DtNuevaReserva;
+    //================= Colecciones =======================
+    OrderedDictionary * DicUsuarios;
+    OrderedDictionary * DicPeliculas;
+    OrderedDictionary * DicCines;
+    map<string,float> financieras;
 };
 
 #endif // SISTEMA_H
