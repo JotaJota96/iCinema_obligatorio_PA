@@ -556,6 +556,7 @@ void comentarPelicula(){
         if (!colPeliculas->isEmpty()){
             while(it->hasCurrent()){
                 cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
+                it->next();
             }
             mostrarTitulo("-");
             delete it;
@@ -581,6 +582,7 @@ void comentarPelicula(){
         if (!colComentarios->isEmpty()){
             while(it->hasCurrent()){
                 cout << *(dynamic_cast<DtComentario*>(it->getCurrent())) << endl;
+                it->next();
             }
             mostrarTitulo("-");
             delete it;
