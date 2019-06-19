@@ -6,6 +6,8 @@
 #include "Pelicula.h"
 #include "Funcion.h"
 #include "Sala.h"
+#include "colecciones/collections/OrderedDictionary.h"
+#include "colecciones/collections/List.h"
 
 #include <map>
 class Pelicula;
@@ -14,6 +16,29 @@ class Usuario;
 
 //Controlador Sistema (Singleton)
 class Sistema:public ISistema{
+private:
+    // constructor
+    Sistema();
+    static Sistema * instancia;
+
+    //=============== Datos Actuales =======-=============
+    RolDeUsuario rolActual;
+    Cine * cineActual;
+    Pelicula * peliculaActual;
+    Usuario * usuarioActual;
+    int idComentarioActual;
+    int idFuncionActual;
+    int idSalaActual;
+    int cantAsientos;
+    DtReserva * DtNuevaReserva;
+
+    //================= Colecciones =======================
+    IDictionary * DicUsuarios;
+    IDictionary * DicPeliculas;
+    IDictionary * DicCines;
+    map<string,float> financieras;
+
+    void cargarDatosDePrueba();
 public:
 
     virtual ~Sistema();              //Destructor
@@ -39,8 +64,8 @@ public:
     void cancelarNuevoCine() ;
     void cancelarVerComentariosYPuntajes() ;
     void cancelarVerInformacionDePelicula() ;
-    void comentarComentario(string) ;
-    void comentarPelicula(string) ;
+    void comentarComentario(string _texto) ;
+    void comentarPelicula(string _texto) ;
     void confirmarEliminarPelicula() ;
     void confirmarNuevaReserva() ;
     void confirmarNuevoCine() ;
@@ -57,6 +82,7 @@ public:
     void nuevaSala(int capacidad) ;
     void nuevoCine(Direccion* direccion) ;
     int obtenerPuntajeDadoPorUsuario()  ;
+    RolDeUsuario obtenerRolDeUsuarioActual();
     float pagoCredito(string nombreFinanciera)  ;
     void pagoDebito(string nombreBanco)  ;
     void puntuarPelicula(int puntaje)  ;
@@ -66,24 +92,6 @@ public:
     DtPelicula* seleccionarPelicula(string titulo) ;
     void seleccionarSala(int idSala) ;
     DtReserva* vistaPreviaDeReserva() ;
-
-private:
-    Sistema();
-    Sistema(Usuario * _usuarioActual);
-    static Sistema * instancia;
-    Cine * cineActual;
-    Pelicula * peliculaActual;
-    Usuario * usuarioActual;
-    int idComentarioActual;
-    int idFuncionActual;
-    int idSalaActual;
-    int cantAsientos;
-    DtReserva * DtNuevaReserva;
-    //================= Colecciones =======================
-    OrderedDictionary * DicUsuarios;
-    OrderedDictionary * DicPeliculas;
-    OrderedDictionary * DicCines;
-    map<string,float> financieras;
 };
 
 #endif // SISTEMA_H

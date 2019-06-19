@@ -8,8 +8,8 @@ using namespace std;
 //#include "datatypes/h/Direccion.h"
 //#include "datatypes/h/DateTime.h"
 
-enum tipoUsuario {INVITADO, USUARIO, ADMINISTRADOR};
-tipoUsuario tipoUsuarioActual = INVITADO;
+
+RolDeUsuario tipoUsuarioActual = INVITADO;
 ISistema* sis;
 
 // entrada de datos con validacion
@@ -43,6 +43,7 @@ void interfazGrafica(){
     sis = Fabrica::crearSistema();
 
     while (!salir){
+        tipoUsuarioActual = sis->obtenerRolDeUsuarioActual();
         switch (tipoUsuarioActual) {
         case INVITADO:
             salir = cargarMenuInvitado();
@@ -155,20 +156,6 @@ void iniciarSesion(){
             bool ok = sis->iniciarSesion(usu, pass);
 
             if (ok){
-                // consultar al sistema que tipo de usuario acaba de iniciar sesion
-                // por ahora pongo esto...
-                cout << ">>> Esto esta provisorio... <<<" << endl;
-                cout << "Como que rol queres ingresar?..." << endl;
-                switch (ingresarInt("0- invitado\n1-usuario\n2-admin: ")) {
-                case 1:
-                    tipoUsuarioActual = USUARIO;
-                    break;
-                case 2:
-                    tipoUsuarioActual = ADMINISTRADOR;
-                    break;
-                default:
-                    tipoUsuarioActual = INVITADO;
-                }
                 return;
             }else{
                 cout << "El nickname o la contrasenia son incorrectos" << endl;
@@ -234,6 +221,7 @@ void altaFuncion(){
         IIterator *it = colPeliculas->getIterator();
         while(it->hasCurrent()){
             cout << dynamic_cast<DtPelicula *>(it->getCurrent()) -> getTitulo() << endl;
+            it->next();
         }
         delete it;
         delete colPeliculas;
@@ -252,6 +240,7 @@ void altaFuncion(){
             it = colCines->getIterator();
             while(it->hasCurrent()){
                 cout << *(dynamic_cast<DtCine*>(it->getCurrent())) << endl << endl;
+                it->next();
             }
             delete it;
             delete colCines;
@@ -269,6 +258,7 @@ void altaFuncion(){
             it = colSalas->getIterator();
             while(it->hasCurrent()){
                 cout << *(dynamic_cast<DtSala*>(it->getCurrent())) << endl << endl;
+                it->next();
             }
             delete it;
             delete colSalas;
@@ -278,6 +268,7 @@ void altaFuncion(){
             it = colSalasOcupadas->getIterator();
             while(it->hasCurrent()){
                 cout << *(dynamic_cast<DtFuncion*>(it->getCurrent())) << endl << endl;
+                it->next();
             }
             delete it;
             delete colSalasOcupadas;

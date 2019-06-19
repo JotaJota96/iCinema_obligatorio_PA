@@ -14,7 +14,9 @@
 
 using namespace std;
 
- class ISistema{
+enum RolDeUsuario {INVITADO, USUARIO, ADMINISTRADOR};
+
+class ISistema{
 public:
      virtual ~ISistema(); //Destructor
 
@@ -42,6 +44,7 @@ public:
      virtual void nuevaSala(int capacidad) = 0;
      virtual void nuevoCine(Direccion* direccion) = 0;
      virtual int obtenerPuntajeDadoPorUsuario() = 0 ;
+     virtual RolDeUsuario obtenerRolDeUsuarioActual() = 0;
      virtual float pagoCredito(string nombreFinanciera) = 0 ;
      virtual void pagoDebito(string nombreBanco) = 0 ;
      virtual void puntuarPelicula(int puntaje) = 0 ;
