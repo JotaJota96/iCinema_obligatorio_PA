@@ -115,7 +115,8 @@ void Sistema::cancelarVerInformacionDePelicula(){  //Terminada Verificar
     this->cineActual = NULL;
 }
 void Sistema::comentarComentario(string _texto){
-
+    Comentario* res = this->peliculaActual->comentarComentario(_texto, this->idComentarioActual);
+    res->vincularUsuario(this->usuarioActual);
 }
 void Sistema::comentarPelicula(string _texto){     //Terminada Verificar
         Comentario * res = this->peliculaActual->comentar(_texto);
