@@ -75,13 +75,9 @@ Comentario* Pelicula::comentarComentario(string texto, int idComentarioActual){
 }
 
 Comentario* Pelicula::comentar(string texto){
-    //Genero el nuevo id
     int nuevoID = Comentario::getNuevoID();
-    //Creo la Key con ese id
     IKey *k = new Integer(nuevoID);
-    //Creo el comentario
     Comentario *c = new Comentario(nuevoID,texto,0,NULL);
-    //lo agrego a la coleccion
     this->comentarios->add(k,c);
     return c;
 }
@@ -130,31 +126,107 @@ DtPelicula* Pelicula::getDataType(){
     DtPelicula *dtRes = new DtPelicula(this->titulo,this->poster,this->sinopsis,this->getPuntuacion());
     return dtRes;
 }
-/*
-Funcion* Pelicula::crearFuncion(DateTime fechaYHora, float costoEntrada, Cine *cineActual){
-    int IDFuncion; = Funcion::getNuevoID();
-    Funcion *f = new Funcion(IDFuncion,fechaYHora,costoEntrada)
+
+Funcion* Pelicula::crearFuncion(DateTime* fechaYHora, float costoEntrada, Cine *cineActual){
+
+    if(fechaYHora == NULL){
+        throw std::invalid_argument("La fecha y hora es vacia");
+    }
+    if(cineActual == NULL){
+        throw std::invalid_argument("El cine es vacio");
+    }
+
+
+    int IDFuncion = Funcion::getNuevoID();
+    Funcion *f = new Funcion(IDFuncion,fechaYHora,costoEntrada);
     IKey *kf = new Integer(IDFuncion);
-    this->funciones->add(kf,f)
+    this->funciones->add(kf,f);
 
     int IDCine = cineActual->getID();
     IKey *kc = new Integer(IDCine);
-    if(!(this->funciones->member(kc))){
-        this->funciones->add(cineActual);
+    if(!(this->cines->member(kc))){
+        this->cines->add(kc,cineActual);
     }
     return f;
-}*/
+}
 
+float Pelicula::getCostoDeFuncion(int idFuncionActual){
+    IKey *k = new Integer(idFuncionActual);
+    Funcion *f = dynamic_cast<Funcion *>(this->funciones->find(k));
 
+    if(f == NULL){
+        throw std::invalid_argument("No existe funcion con ese ID");
+    }
 
+    delete k;
+    return f->getCostoEntrada();
+}
 
+ICollection* Pelicula::obtenerFunciones(DateTime *fechaActual, int idCineActual){
 
+    if(fechaActual == NULL){
+        throw std::invalid_argument("La fecha es vacia");
+    }
 
+    IIterator *it = funciones->getIterator();
+    ICollection *ret = new List();
+    while(it->hasCurrent()){
+        Funcion *f = dynamic_cast<Funcion *>(it->getCurrent());
+        if (f->esPosterior(fechaActual)) {
+            if (f->esEnCine(idCineActual)){
+                ret->add(f->getDataType());
+            }
+        }
+        it->next();
+    }
+    delete it;
+    return ret;
+}
 
+DtFuncion* Pelicula::obtenerDtFuncion(int idFuncion){
 
+    IKey *k = new Integer(idFuncion);
+    Funcion *f = dynamic_cast<Funcion *>(this->funciones->find(k));
 
+    if(f == NULL){
+        throw std::invalid_argument("No existe funcion con ese ID");
+    }
 
+    delete k;
+    return f->getDataType();
+}
 
+void Pelicula::eiminarLinks(){
+    IIterator *it = funciones->getIterator();
+    while (it->hasCurrent()) {
+        Funcion *f = dynamic_cast<Funcion *>(it->getCurrent());
+        f->eliminarReservas();
+        delete f;
+        it->next();
+    }
+    delete it;
+    delete funciones;
 
+    it = comentarios->getIterator();
+    while (it->hasCurrent()) {
+        Comentario *c = dynamic_cast<Comentario *>(it->getCurrent());
+        c->eliminarComentarios();
+        delete c;
+        it->next();
+    }
+    delete it;
+    delete comentarios;
+}
 
+void Pelicula::agregarReservaAFuncion(DtReserva *dtNuevaReserva, int idFuncionActual){
+    IKey *k = new Integer(idFuncionActual);
+    Funcion *f = dynamic_cast<Funcion *>(funciones->find(k));
+
+    if(f == NULL){
+        throw std::invalid_argument("No existe funcion con ese ID");
+    }
+
+    delete k;
+    f->agregarReserva(dtNuevaReserva);
+}
 

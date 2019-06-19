@@ -2,7 +2,7 @@
 #define PELICULA_H
 #include "../../clases/h/Cine.h"
 #include "../../clases/h/Comentario.h"
-//- #include "../../clases/h/Funcion.h"
+#include "../../clases/h/Funcion.h"
 #include "../../datatypes/h/DtPelicula.h"
 #include "../../datatypes/h/DtFuncion.h"
 #include "../../datatypes/h/DateTime.h"
@@ -38,16 +38,16 @@ public:
     // operaciones
     Comentario* comentarComentario(string texto, int idComentarioActual);
     Comentario* comentar(string texto);
-//- Funcion* crearFuncion(DateTime fechaYHora, float costoEntrada, Cine *cineActual);
-//- float getCostoDeFuncion(int idFuncionActual);
+    Funcion* crearFuncion(DateTime* fechaYHora, float costoEntrada, Cine *cineActual);
+    float getCostoDeFuncion(int idFuncionActual);
     Puntuacion* nuevaPuntuacion(int puntos);
     ICollection* obtenerCines(); // set(DtCine)
     ICollection* obtenerComentarios(); //set(DtComentario)
-//- ICollection* obtenerFunciones(DateTime fechaActual, int idCineActual); //Set(DtFuncion)
+    ICollection* obtenerFunciones(DateTime* fechaActual, int idCineActual); //Set(DtFuncion)
     DtPelicula* getDataType();
-//- DtFuncion* obtenerDtFuncion(int idFuncion);
-//- void eiminarLinks();
-//- void agregarReservaAFuncion(DtReserva* dtNuevaReserva, int idFuncionActual);
+    DtFuncion* obtenerDtFuncion(int idFuncion);
+    void eiminarLinks();
+    void agregarReservaAFuncion(DtReserva* dtNuevaReserva, int idFuncionActual);
 };
 
 #endif // PELICULA_H

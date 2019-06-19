@@ -28,7 +28,7 @@ float DtFuncion::getCosto(){
 
 std::ostream& operator <<(std::ostream &salida, const DtFuncion &f){
     salida << "ID: " << f.ID << endl;
-    salida << "Fecha: " << f.FechaYHora << endl;
+    salida << "Fecha: " << *f.FechaYHora << endl;
     salida << "Costo: $" << f.costoEntrada<< endl;
     salida << "Sala: " << f.idSala;
     return salida;

@@ -58,7 +58,7 @@ DtCine *Cine::getDataType(){
 // operaciones
 Sala* Cine::obtenerSala(int id){
     IKey *k = new Integer(id);
-    Sala *s = (Sala*) this->misSalas->find(k);
+    Sala *s = dynamic_cast<Sala*>(this->misSalas->find(k));
 
     if(s == NULL){
         throw std::invalid_argument("Esa sala no se encuentra");

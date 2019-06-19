@@ -13,11 +13,13 @@ Funcion::Funcion()
     this->fechaYHora=new DateTime();
     this->costoEntrada=0;
     this->s=NULL;
+    this->misReservas = new OrderedDictionary();
 }
 Funcion::Funcion(int id,DateTime *FechaYHora,float CostoEntrada){
     this->id = id;
     this->fechaYHora = FechaYHora;
     this->costoEntrada = CostoEntrada;
+    this->misReservas = new OrderedDictionary();
     this->s = NULL;
 }
 
@@ -94,8 +96,7 @@ void Funcion::agregarReserva(DtReserva *dtNuevaReserva){
 
 
 void Funcion::eliminarReservas(){
-
-    IIterator *it = misReservas->getIterator();
+    IIterator *it = this->misReservas->getIterator();
     while(it->hasCurrent()){
         Reserva *Borrar = dynamic_cast<Reserva *> (it->getCurrent());
         delete Borrar;

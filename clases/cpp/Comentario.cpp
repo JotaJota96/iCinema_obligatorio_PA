@@ -17,9 +17,9 @@ Comentario::Comentario(){
 }
 Comentario::Comentario(int id, string texto, int nivelSubComentario, Usuario* usuario){
 
-    if(usuario == NULL){
-        throw std::invalid_argument("El usuario es vacio");
-    }
+    //if(usuario == NULL){
+    //    throw std::invalid_argument("El usuario es vacio");
+    //}
 
     this->id = id;
     this->texto = texto;

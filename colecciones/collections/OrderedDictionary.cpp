@@ -128,7 +128,7 @@ ICollectible *OrderedDictionary::find(IKey *k) const{
         ComparisonRes comp = key->compare(current->getKey());
         if(comp == EQUAL)
            return current->getVal();
-        else if(comp == LESSER)
+        else if(comp == GREATER)
             current = current->getLesser();
         else
             current = current->getGreater();
