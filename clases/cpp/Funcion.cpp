@@ -1,5 +1,5 @@
-#include "../../clases/h/funcion.h"
-
+#include "../h/Funcion.h"
+#include <stdexcept>
 
 int Funcion::contadorFunciones=0;
 
@@ -13,6 +13,12 @@ Funcion::Funcion()
     this->fechaYHora=new DateTime();
     this->costoEntrada=0;
     this->s=NULL;
+}
+Funcion::Funcion(int id,DateTime *FechaYHora,float CostoEntrada){
+    this->id = id;
+    this->fechaYHora = FechaYHora;
+    this->costoEntrada = CostoEntrada;
+    this->s = NULL;
 }
 
 Funcion::~Funcion(){
@@ -37,6 +43,11 @@ void Funcion::setId(int Id){
 }
 
 void Funcion::setFechaYHora(DateTime *FechaYHora){
+
+    if(FechaYHora == NULL){
+        throw std::invalid_argument("La fecha y hora es vacia");
+    }
+
     this->fechaYHora=FechaYHora;
 }
 
@@ -48,6 +59,11 @@ DtFuncion * Funcion::getDataType(){
 
 
 void Funcion::agregarReserva(DtReserva *dtNuevaReserva){
+
+    if(dtNuevaReserva == NULL){
+        throw std::invalid_argument("El dtNuevaReserva es vacio");
+    }
+
     if(dtNuevaReserva->getTipo()==reservaCredito){
         int id=Reserva::getNuevoID();
         IKey *k = new Integer(id);
@@ -90,6 +106,11 @@ void Funcion::eliminarReservas(){
 }
 
 void Funcion::asignarSala(Sala *salita){
+
+    if(salita == NULL){
+        throw std::invalid_argument("La salita es vacia");
+    }
+
     this->s = salita;
 }
 
@@ -99,5 +120,10 @@ bool Funcion::esEnCine(int idCineActual){
 
 
 bool Funcion::esPosterior(DateTime *fechaActual){
+
+    if(fechaActual == NULL){
+        throw std::invalid_argument("La fechaActual es vacia");
+    }
+
    return *fechaActual < *(this->fechaYHora);
 }
