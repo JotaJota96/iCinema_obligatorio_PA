@@ -1,26 +1,14 @@
 #include <iostream>
 using namespace std;
 
-#include "colecciones/collections/OrderedDictionary.h"
-#include "colecciones/collections/List.h"
-#include "colecciones/String.h"
-
-#include "clases/h/Cine.h"
-#include "clases/h/Comentario.h"
-#include "clases/h/Pelicula.h"
-#include "clases/h/ReservaCredito.h"
-#include "clases/h/ReservaDebito.h"
-#include "clases/h/Usuario.h"
-
-IDictionary *users;
-
-//void cargarDatosDePrueba();
-//void pruebaDeCinesYSalas();
-//void pruebaDeComentarios();
-//void pruebaDePelicula();
-
 #include "interfazGrafica.h"
+#include "clases/h/ISistema.h"
+#include "clases/h/Fabrica.h"
 
+   //////////////////////////////////////////////////////////////
+  ////             Repositorio en GitHub:                   ////
+ //// https://github.com/JotaJota96/iCinema_obligatorio_PA ////
+//////////////////////////////////////////////////////////////
 
 int main(){
     ISistema *system = Fabrica::crearSistema();
@@ -29,12 +17,33 @@ int main(){
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }
-
-    // Haga aqui los testeamientos necesarios
-
     return 0;
 }
 
+
+/*
+//////////////////////////////////////////////////////
+//// Estas son algunas de las pruebas que hicimos ////
+//////////////////////////////////////////////////////
+
+//#include "colecciones/collections/OrderedDictionary.h"
+//#include "colecciones/collections/List.h"
+//#include "colecciones/String.h"
+
+//#include "clases/h/Cine.h"
+//#include "clases/h/Comentario.h"
+//#include "clases/h/Pelicula.h"
+//#include "clases/h/ReservaCredito.h"
+//#include "clases/h/ReservaDebito.h"
+//#include "clases/h/Usuario.h"
+
+//IDictionary *users;
+
+//void cargarDatosDePrueba();
+//void pruebaDeCinesYSalas();
+//void pruebaDeComentarios();
+//void pruebaDePelicula();
+*/
 /*
 void cargarDatosDePrueba(){
     // crea el diccionario de usuarios

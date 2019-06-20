@@ -469,7 +469,6 @@ void Sistema::cargarDatosDePrueba(){
     user1->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user1->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user1->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user1->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user2->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user2->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user2->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -478,7 +477,6 @@ void Sistema::cargarDatosDePrueba(){
     user2->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user2->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user2->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user2->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user3->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user3->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user3->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -487,7 +485,6 @@ void Sistema::cargarDatosDePrueba(){
     user3->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user3->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user3->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user3->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user4->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user4->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user4->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -496,7 +493,6 @@ void Sistema::cargarDatosDePrueba(){
     user4->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user4->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user4->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user4->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user5->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user5->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user5->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -505,8 +501,6 @@ void Sistema::cargarDatosDePrueba(){
     user5->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user5->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user5->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user5->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
-    user6->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user6->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user6->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
     user6->vincularNuevaPuntuacion(peli4->nuevaPuntuacion(1));
@@ -514,7 +508,6 @@ void Sistema::cargarDatosDePrueba(){
     user6->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user6->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user6->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user6->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user7->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user7->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user7->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -523,7 +516,6 @@ void Sistema::cargarDatosDePrueba(){
     user7->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user7->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user7->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user7->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user8->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user8->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user8->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -532,7 +524,6 @@ void Sistema::cargarDatosDePrueba(){
     user8->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user8->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user8->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user8->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
     user9->vincularNuevaPuntuacion(peli1->nuevaPuntuacion(5));
     user9->vincularNuevaPuntuacion(peli2->nuevaPuntuacion(3));
     user9->vincularNuevaPuntuacion(peli3->nuevaPuntuacion(5));
@@ -541,7 +532,6 @@ void Sistema::cargarDatosDePrueba(){
     user9->vincularNuevaPuntuacion(peli6->nuevaPuntuacion(4));
     user9->vincularNuevaPuntuacion(peli7->nuevaPuntuacion(4));
     user9->vincularNuevaPuntuacion(peli8->nuevaPuntuacion(1));
-    user9->vincularNuevaPuntuacion(peli9->nuevaPuntuacion(5));
 
     // peli|->comentar('texto de comentario @')->vincularUsuario(user#);
     peli1->comentar("texto de comentario 1")->vincularUsuario(user1);

@@ -38,7 +38,8 @@ std::ostream& operator <<(std::ostream &salida, const DtReserva &r){
     salida << "ID: " << r.id << endl;
     salida << "Cantidad de asientos: " << r.asientos << endl;
     salida << "Costo: " << r.costo << endl;
-    salida << "Tipo: Reserva con credito";
+    if (r.tipo == reservaCredito) salida << "Tipo: Reserva con credito";
+    if (r.tipo == reservaDebito) salida << "Tipo: Reserva con debito";
     return salida;
 }
 

@@ -3,30 +3,21 @@
 #include <windows.h>
 using namespace std;
 
-//#include "clases/h/ISistema.h"
+#include "clases/h/ISistema.h"
 #include "clases/h/Fabrica.h"
-#include "datatypes/h/DtComentario.h"
 
+#define ANCHO_CONSOLA 60
 #define COLOR_ERROR 12
 #define COLOR_INGRESO 11
 #define COLOR_NORMAL 15
 #define COLOR_TITULO 10
 HANDLE  hConsole;
 
-#define ANCHO_CONSOLA 60
-
 RolDeUsuario tipoUsuarioActual = INVITADO;
 ISistema* sis;
 
-// entrada de datos con validacion
-float ingresarFloat(string msj);
-int ingresarInt(string msj);
-string ingresarString(string msj);
-bool ingresarBool(string msj);
-void pausa();
-void limpiarPantalla();
-void mostrarTitulo(string titulo);
-void mostrarError(string err);
+// iniciar la interfaz grafica
+void interfazGrafica(ISistema *s);
 
 // menus segun rol
 bool cargarMenuInvitado();
@@ -44,10 +35,24 @@ void eliminarPelicula();
 void verInfoDePelicula();
 void verComentariosYPuntajeDePelicula();
 
+// entrada de datos con validacion
+float ingresarFloat(string msj);
+int ingresarInt(string msj);
+string ingresarString(string msj);
+bool ingresarBool(string msj);
+void pausa();
+void limpiarPantalla();
+void mostrarTitulo(string titulo);
+void mostrarError(string err);
+void mostrarBienvenida(int,int,int);
+
+///////////////////////////////////////////////////////////////////////////////////
 void interfazGrafica(ISistema *s){
     sis = s; // carga a la variable el sistema recibido
 
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // esto es para darle color al texto
+
+    mostrarBienvenida(2,2,1000);
 
     bool salir = false; // mientras no se desee salir, entra al ciclo
     while (!salir){
@@ -64,6 +69,7 @@ void interfazGrafica(ISistema *s){
             break;
         }
     }
+    limpiarPantalla();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +494,10 @@ void crearReserva(){
         if (dynamic_cast<DtReservaDebito*>(dtR)){
             cout << *(dynamic_cast<DtReservaDebito*>(dtR)) << endl;
         }else{
-            cout << *(dynamic_cast<DtReservaCredito*>(dtR)) << endl;
+            DtReservaCredito *rc = dynamic_cast<DtReservaCredito*>(dtR);
+            cout << *rc << endl;
+            float total = (rc->getCosto() - (rc->getCosto() * float(rc->getDescuento()/100.0)));
+            cout << "Costo final: " << total << endl;
         }
 
         // solicita confirmar la operacion
@@ -963,6 +972,80 @@ void mostrarError(string err){
     cout << "ERROR: " << err << endl;
     SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
     pausa();
+}
+void mostrarBienvenida(int x, int y, int esperaFinal){
+    int iCinema[7][66] = {{32,32,32,32,32,220,219,219,219,219,219,219,220,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32},
+                          {219,219,32,32,219,219,223,32,32,32,32,223,219,219,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32},
+                          {32,32,32,32,219,219,32,32,32,32,32,32,32,32,32,32,219,219,32,32,219,219,219,219,219,219,219,219,220,32,32,32,32,220,219,219,219,219,219,220,32,32,32,219,219,219,219,32,32,219,219,220,32,32,32,32,32,220,219,219,219,219,219,220,32},
+                          {219,219,32,32,219,219,32,32,32,32,32,32,32,32,32,32,32,32,32,32,219,219,32,32,32,32,32,223,219,219,32,32,219,219,32,32,32,32,32,219,219,32,32,219,219,32,32,219,219,32,223,219,219,32,32,32,32,32,32,32,32,32,223,219,219},
+                          {219,219,32,32,219,219,32,32,32,32,32,32,32,32,32,32,219,219,32,32,219,219,32,32,32,32,32,32,219,219,32,32,219,219,219,219,219,219,219,219,223,32,32,219,219,32,32,219,219,32,32,219,219,32,32,32,220,219,219,219,219,219,219,219,219},
+                          {219,219,32,32,219,219,220,32,32,32,32,220,219,219,32,32,219,219,32,32,219,219,32,32,32,32,32,32,219,219,32,32,219,219,220,32,32,32,32,32,32,32,32,219,219,32,32,32,32,32,32,219,219,32,32,219,219,32,32,32,32,32,32,219,219},
+                          {219,219,32,32,32,223,219,219,219,219,219,219,223,32,32,32,219,219,32,32,219,219,32,32,32,32,32,32,219,219,32,32,32,223,219,219,219,219,219,223,32,32,32,219,219,32,32,32,32,32,32,219,219,32,32,32,223,219,219,219,219,219,219,219,223}
+                          };
+
+    SetConsoleTextAttribute(hConsole, COLOR_TITULO);
+
+    // deja espacio arriba
+    for (int i = 0; i<y; i++) printf("\n");
+
+    // recorre las filas
+    for (int i = 0; i<7; i++){
+        //Sleep(200);
+        // deja un margen a la izquierda
+        for (int j = 0; j < x; j++) printf("  ");
+
+        // muestra la fila del cartel
+        for (int j = 0; j < 66; j++){
+            printf("%c", iCinema[i][j]);
+            if (iCinema[i][j] != 32)
+                Sleep(1);
+        }
+        printf("\n");
+    }
+    // deja espacio abajo
+    for (int i = 0; i<y; i++) printf("\n");
+    Sleep(esperaFinal);
+    for (int f = 0; f < 2; f++){
+        limpiarPantalla();
+        // deja espacio arriba
+        for (int i = 0; i<y; i++) printf("\n");
+
+        // recorre las filas
+        for (int i = 0; i<7; i++){
+            // deja un margen a la izquierda
+            for (int j = i % 3; j < x; j++) printf("  ");
+
+            // muestra la fila del cartel
+            for (int j = 0; j < 66; j++){
+                printf("%c", iCinema[i][j]);
+            }
+            printf("\n");
+        }
+
+        limpiarPantalla();
+        // deja espacio arriba
+        for (int i = 0; i<y; i++) printf("\n");
+
+        // recorre las filas
+        for (int i = 0; i<7; i++){
+            // deja un margen a la izquierda
+            for (int j = 0; j < x; j++) printf("  ");
+
+            // muestra la fila del cartel
+            for (int j = 0; j < 66; j++){
+                printf("%c", iCinema[i][j]);
+            }
+            printf("\n");
+        }
+
+    }
+
+
+
+    // deja espacio abajo
+    for (int i = 0; i<y; i++) printf("\n");
+    Sleep(esperaFinal);
+    SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
