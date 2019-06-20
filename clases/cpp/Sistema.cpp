@@ -63,12 +63,21 @@ int Sistema::getIdSalaActual(){
     return this->idSalaActual;
 }
 void Sistema::setCineActual(Cine * _cineActual){
+    if(_cineActual == NULL){
+        throw std::invalid_argument("El nuevo cine actual es vacio");
+    }
     this->cineActual = _cineActual;
 }
 void Sistema::setUsuarioActual(Usuario * _usuarioActual){
+    if(_usuarioActual == NULL){
+        throw std::invalid_argument("El nuevo usuario actual es vacio");
+    }
     this->usuarioActual = _usuarioActual;
 }
 void Sistema::setPeliculaActual(Pelicula * _peliculaActual){
+    if(_peliculaActual == NULL){
+        throw std::invalid_argument("La nueva pelicula actual es vacio");
+    }
     this->peliculaActual = _peliculaActual;
 }
 void Sistema::setIdComentarioActual(int _idComentarioActual){
@@ -93,10 +102,10 @@ void Sistema::cerrarSesion(){
     this->idComentarioActual = 0;
     this->DtNuevaReserva = NULL;
 }
+
 void Sistema::cancelarEliminarPelicula(){  //Terminada Verificar
     this->peliculaActual = NULL;
 }
-
 void Sistema::cancelarNuevaReserva(){     //Terminada Verificar
     delete this->DtNuevaReserva;
     this->idFuncionActual = 0;
@@ -116,24 +125,34 @@ void Sistema::cancelarVerInformacionDePelicula(){  //Terminada Verificar
 }
 void Sistema::comentarComentario(string _texto){
     Comentario* res = this->peliculaActual->comentarComentario(_texto, this->idComentarioActual);
+
+    if(res == NULL){
+        throw std::invalid_argument("No se encontro el comentario");
+    }
     res->vincularUsuario(this->usuarioActual);
 }
 void Sistema::comentarPelicula(string _texto){     //Terminada Verificar
-        Comentario * res = this->peliculaActual->comentar(_texto);
-        res->vincularUsuario(this->usuarioActual);
+    Comentario * res = this->peliculaActual->comentar(_texto);
+
+    if(res == NULL){
+        throw std::invalid_argument("No se pudo comentar la pelicula");
+    }
+    res->vincularUsuario(this->usuarioActual);
 }
 void Sistema::confirmarEliminarPelicula(){           // Terminada Verificar
     string titulo = peliculaActual->getTitulo();
+
     IIterator * it = DicUsuarios->getIterator();
     while (it->hasCurrent()) {
         dynamic_cast<Usuario *>(it->getCurrent())->eliminarLinkAPuntuacion(titulo);
         it->next();
     }
     delete it;
+
     this->peliculaActual->eiminarLinks();
     IKey * k = new String(titulo.c_str());
-    delete peliculaActual;
     DicPeliculas->remove(k);
+    delete peliculaActual;
     delete k;
     peliculaActual = NULL;
 }
@@ -183,12 +202,15 @@ ICollection* Sistema::listarCines(){        // Terminada Verificar
 }
 
 ICollection * Sistema::listarComentarios(){ // Terminada Verificar
-    ICollection * comentarios = new List();
-    comentarios = this->peliculaActual->obtenerComentarios();
+    ICollection * comentarios = this->peliculaActual->obtenerComentarios();
     return comentarios;
 }
 
 ICollection * Sistema::listarFunciones(DateTime* fechaActual){ // Terminada Verificar
+
+    if(fechaActual == NULL){
+        throw std::invalid_argument("La fecha y horaes vacia");
+    }
     int idCineActual = this->cineActual->getID();
     return this->peliculaActual->obtenerFunciones(fechaActual, idCineActual);
 }
@@ -211,16 +233,21 @@ ICollection * Sistema::listarSalas(){ //Terminada Verificar
 ICollection * Sistema::listarSalasOcupadas(DateTime * fechaActual){ //Terminada Verifiar
     int idCineActual = cineActual->getID();
     ICollection * ret = new List();
-    IIterator * it2;
+
     IIterator * it = DicPeliculas->getIterator();
+    ICollection * aux;
+    IIterator * it2;
+
     while (it->hasCurrent()) {
        Pelicula* p = dynamic_cast<Pelicula*>(it->getCurrent());
-       it2 = p->obtenerFunciones(fechaActual,idCineActual)->getIterator();
+       aux = p->obtenerFunciones(fechaActual,idCineActual);
+       it2 = aux->getIterator();
        while (it2->hasCurrent()) {
            ret->add(it2->getCurrent());
            it2->next();
        }
        delete it2;
+       delete aux;
        it->next();
     }
     delete it;
@@ -238,25 +265,40 @@ ICollection* Sistema::listarTodosLosCines(){ // Terminada Verificar
     return ret;
 }
 void Sistema::nuevaFuncion(DateTime* fechaYHora, float costoEntrada){ // Terminada Verificar
+
+    if(fechaYHora == NULL){
+        throw std::invalid_argument("La fecha y hora es vacia");
+    }
+
     Funcion * f = this->peliculaActual->crearFuncion(fechaYHora,costoEntrada,this->cineActual);
     Sala * s = this->cineActual->obtenerSala(this->idSalaActual);
     f->asignarSala(s);
 }
 
 void Sistema::nuevaReserva(int _cantAsientos){          //Terminada Verificar
+
+    if(_cantAsientos <= NULL){
+        throw std::invalid_argument("La cantidad de asientos es menor a 1");
+    }
     this->cantAsientos = _cantAsientos;
 }
 
 void Sistema::nuevaSala(int _capacidad){                //Terminada Verificar
+
+    if(_capacidad == NULL){
+        throw std::invalid_argument("Capacidad menor a 1");
+    }
     this->cineActual->agregarSala(_capacidad);
 }
 
 void Sistema::nuevoCine(Direccion* _direccion){         //Terminada Verificar
+    if(_direccion == NULL){
+        throw std::invalid_argument("La direcion es vacia");
+    }
+
     int id = Cine::getNuevoID();
     Cine * nuevoCine = new Cine(id , _direccion);
     cineActual = nuevoCine;      //Crea el link a cineActual
-    IKey * k = new Integer(id);
-    DicCines->add(k,nuevoCine); //Agregar el nuevo cine al Diccionario
 }
 
 int Sistema::obtenerPuntajeDadoPorUsuario(){            //Termianda Verificar
@@ -272,7 +314,7 @@ RolDeUsuario Sistema::obtenerRolDeUsuarioActual(){
 float Sistema::pagoCredito(string nombreFinanciera){   //Terminada Falta verificar el descuento
     float costoFuncion = this->peliculaActual->getCostoDeFuncion(this->idFuncionActual);
     float costo = float(cantAsientos * costoFuncion);
-    this->DtNuevaReserva = new DtReservaCredito(this->idFuncionActual, cantAsientos , costo,reservaCredito, nombreFinanciera, 10 );
+    this->DtNuevaReserva = new DtReservaCredito(this->idFuncionActual, cantAsientos , costo,reservaCredito, nombreFinanciera, (int) financieras[nombreFinanciera]);
     return financieras[nombreFinanciera];
 }
 void Sistema::pagoDebito(string nombreBanco){
@@ -282,21 +324,29 @@ void Sistema::pagoDebito(string nombreBanco){
 }
 
 void Sistema::puntuarPelicula(int puntaje){             //Terminada Verificar
+    if(puntaje < 1 || puntaje > 5){
+        throw std::invalid_argument("Puntaje fuera de rango 1 a 5");
+    }
+
     string titulo = this->peliculaActual->getTitulo();
     bool ok = this->usuarioActual->yaPuntuoPelicula(titulo);
     if(ok)
         this->usuarioActual->actualizarPuntuacion(titulo, puntaje);
     else {
-        Puntuacion * nuevaPuntuacion = new Puntuacion(titulo,puntaje);
-        this->usuarioActual->vincularNuevaPuntuacion(nuevaPuntuacion);
+        Puntuacion * nuevaPuntuacion = this->peliculaActual->nuevaPuntuacion(puntaje);
+        usuarioActual->vincularNuevaPuntuacion(nuevaPuntuacion);
     }
 }
 
 DtCine * Sistema::seleccionarCine(int idCine){     //Terminada Verificar
     IKey * k = new Integer(idCine);
     cineActual = dynamic_cast<Cine*>(DicCines->find(k));
-    DtCine * cine = cineActual->getDataType();
     delete k;
+
+    if(cineActual == NULL){
+        throw std::invalid_argument("No existe el cine");
+    }
+    DtCine * cine = cineActual->getDataType();
     return  cine;
 }
 
@@ -311,7 +361,12 @@ DtFuncion * Sistema::seleccionarFuncion(int id){        //Terminada Verificar
 DtPelicula * Sistema::seleccionarPelicula(string titulo){  //Terminada Verificar
     IKey * k = new String(titulo.c_str());
     Pelicula * p = dynamic_cast<Pelicula*>(DicPeliculas->find(k));
+    delete k;
     this->peliculaActual = p;
+
+    if(p == NULL){
+        throw std::invalid_argument("No existe la pelicula");
+    }
     return p->getDataType();
 }
 
@@ -554,13 +609,13 @@ void Sistema::cargarDatosDePrueba(){
     peli1->comentarComentario("texto de comentario 62", 61)->vincularUsuario(user9);
 
     // creando funciones
-    peli1->crearFuncion(new DateTime(1,3,20019,10,30), 110, c1)->asignarSala(c1->obtenerSala(1));
-    peli1->crearFuncion(new DateTime(2,4,20019,12,00), 120, c1)->asignarSala(c1->obtenerSala(2));
-    peli1->crearFuncion(new DateTime(3,7,20019,14,30), 132, c1)->asignarSala(c1->obtenerSala(1));
-    peli1->crearFuncion(new DateTime(4,8,20019,16,00), 143, c1)->asignarSala(c1->obtenerSala(2));
-    peli1->crearFuncion(new DateTime(5,2,20019,18,30), 150, c2)->asignarSala(c2->obtenerSala(4));
-    peli1->crearFuncion(new DateTime(6,8,20019,12,00), 160, c2)->asignarSala(c2->obtenerSala(4));
-    peli1->crearFuncion(new DateTime(7,5,20019,15,30), 170, c2)->asignarSala(c2->obtenerSala(6));
-    peli1->crearFuncion(new DateTime(8,7,20019,17,00), 180, c3)->asignarSala(c3->obtenerSala(8));
+    peli1->crearFuncion(new DateTime(1,3,2019,10,30), 110, c1)->asignarSala(c1->obtenerSala(1));
+    peli1->crearFuncion(new DateTime(2,4,2019,12,00), 120, c1)->asignarSala(c1->obtenerSala(2));
+    peli1->crearFuncion(new DateTime(3,7,2019,14,30), 132, c1)->asignarSala(c1->obtenerSala(1));
+    peli1->crearFuncion(new DateTime(4,8,2019,16,00), 143, c1)->asignarSala(c1->obtenerSala(2));
+    peli1->crearFuncion(new DateTime(5,2,2019,18,30), 150, c2)->asignarSala(c2->obtenerSala(4));
+    peli1->crearFuncion(new DateTime(6,8,2019,12,00), 160, c2)->asignarSala(c2->obtenerSala(4));
+    peli1->crearFuncion(new DateTime(7,5,2019,15,30), 170, c2)->asignarSala(c2->obtenerSala(6));
+    peli1->crearFuncion(new DateTime(8,7,2019,17,00), 180, c3)->asignarSala(c3->obtenerSala(8));
 
 }

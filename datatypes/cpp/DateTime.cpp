@@ -73,20 +73,32 @@ int DateTime::getMinuto(){
 }
 
 bool operator <(const DateTime &f1, const DateTime &f2){
-	if (f1.anio < f2.anio)	return true;
-	if (f1.anio > f2.anio)	return false;
+    if (f1.anio < f2.anio)
+        return true;
+    if (f1.anio > f2.anio)
+        return false;
+
 	// si llega hasta aca, son el mismo anio y hay que verificar el mes
-	if (f1.mes < f2.mes)	return true;
-	if (f1.mes > f2.mes)	return false;
+    if (f1.mes < f2.mes)
+        return true;
+    if (f1.mes > f2.mes)
+        return false;
+
 	// si llega hasta aca, son el mismo anio y el mismo mes, hay que verificar el dia
-	if (f1.dia < f2.dia)	return true;
-	if (f1.dia > f2.dia)	return false;
+    if (f1.dia < f2.dia)
+        return true;
+    if (f1.dia > f2.dia)
+        return false;
 
-    if (f1.hora < f2.hora)	return true;
-    if (f1.hora > f2.hora)	return false;
+    if (f1.hora < f2.hora)
+        return true;
+    if (f1.hora > f2.hora)
+        return false;
 
-    if (f1.minuto < f2.minuto)	return true;
-    if (f1.minuto > f2.minuto)	return false;
+    if (f1.minuto < f2.minuto)
+        return true;
+    if (f1.minuto > f2.minuto)
+        return false;
 
 	// si llega hasta aca, es la misma fecha, y retorna false
 	return false;

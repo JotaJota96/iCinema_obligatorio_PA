@@ -126,5 +126,5 @@ bool Funcion::esPosterior(DateTime *fechaActual){
         throw std::invalid_argument("La fechaActual es vacia");
     }
 
-   return *fechaActual < *(this->fechaYHora);
+   return (*fechaActual < *(this->fechaYHora));
 }

@@ -23,7 +23,6 @@ void pruebaDePelicula();
 
 
 int main(){
-    //interfazGrafica();
     try {
         interfazGrafica();
     } catch (invalid_argument &ia) {

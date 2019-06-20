@@ -6,7 +6,6 @@ int Comentario::getNuevoID(){
     return ++Comentario::contadorDeComentarios;
 }
 
-
 // constructor y destructor
 Comentario::Comentario(){
     this->id = 0;
