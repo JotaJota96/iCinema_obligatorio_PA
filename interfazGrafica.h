@@ -1,13 +1,19 @@
 #include <stdlib.h>
 #include <iostream>
+#include <windows.h>
 using namespace std;
 
-#include "clases/h/ISistema.h"
+//#include "clases/h/ISistema.h"
 #include "clases/h/Fabrica.h"
 #include "datatypes/h/DtComentario.h"
-//#include "datatypes/h/Direccion.h"
-//#include "datatypes/h/DateTime.h"
 
+#define COLOR_ERROR 12
+#define COLOR_INGRESO 11
+#define COLOR_NORMAL 15
+#define COLOR_TITULO 10
+HANDLE  hConsole;
+
+#define ANCHO_CONSOLA 60
 
 RolDeUsuario tipoUsuarioActual = INVITADO;
 ISistema* sis;
@@ -38,10 +44,12 @@ void eliminarPelicula();
 void verInfoDePelicula();
 void verComentariosYPuntajeDePelicula();
 
-void interfazGrafica(){
-    bool salir = false;
-    sis = Fabrica::crearSistema();
+void interfazGrafica(ISistema *s){
+    sis = s; // carga a la variable el sistema recibido
 
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // esto es para darle color al texto
+
+    bool salir = false; // mientras no se desee salir, entra al ciclo
     while (!salir){
         tipoUsuarioActual = sis->obtenerRolDeUsuarioActual();
         switch (tipoUsuarioActual) {
@@ -813,6 +821,8 @@ void verComentariosYPuntajeDePelicula(){
 
         cout << *dtP << endl;
 
+        mostrarTitulo("Comentarios");
+
         ICollection* colC = sis->listarComentarios();
         it = colC->getIterator();
         if (!colC->isEmpty()){
@@ -842,6 +852,9 @@ float ingresarFloat(string msj){
     string entrada = "";
     while (true){
         cout << msj;
+        SetConsoleTextAttribute(hConsole, COLOR_INGRESO);
+        cout << msj;
+        SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
         getline(cin, entrada);
 
         if (entrada.length() == 0){
@@ -874,7 +887,9 @@ float ingresarFloat(string msj){
 int ingresarInt(string msj){
     string entrada = "";
     while (true){
+        SetConsoleTextAttribute(hConsole, COLOR_INGRESO);
         cout << msj;
+        SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
         getline(cin, entrada);
 
         if (entrada.length() == 0){
@@ -895,7 +910,9 @@ int ingresarInt(string msj){
 }
 string ingresarString(string msj){
     string entrada = "";
+    SetConsoleTextAttribute(hConsole, COLOR_INGRESO);
     cout << msj;
+    SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
     getline(cin, entrada);
 
     int inicio = 0;
@@ -911,8 +928,11 @@ bool ingresarBool(string msj){
     string entrada = "";
 
     while (true) {
+        SetConsoleTextAttribute(hConsole, COLOR_INGRESO);
         cout << msj << "[s/n]: ";
+        SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
         getline(cin, entrada);
+
         for (int i=0; i < 4; i++){
             if (afirmaciones[i] == entrada) return true;
         }
@@ -928,15 +948,20 @@ void limpiarPantalla(){
     system("CLS");
 }
 void mostrarTitulo(string titulo){
-    int ancho = 50;
+    SetConsoleTextAttribute(hConsole, COLOR_TITULO);
+    int ancho = ANCHO_CONSOLA;
     ancho -= titulo.length();
     for (int i = 1; i < ancho/2; i++) printf("-");
     printf(" %s ", titulo.c_str());
     for (int i = 1; i < ancho/2; i++) printf("-");
+    if (titulo.length() % 2 != 0) printf("-");
     printf("\n");
+    SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
 }
 void mostrarError(string err){
+    SetConsoleTextAttribute(hConsole, COLOR_ERROR);
     cout << "ERROR: " << err << endl;
+    SetConsoleTextAttribute(hConsole, COLOR_NORMAL);
     pausa();
 }
 

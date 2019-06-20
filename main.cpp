@@ -14,17 +14,18 @@ using namespace std;
 
 IDictionary *users;
 
-void cargarDatosDePrueba();
-void pruebaDeCinesYSalas();
-void pruebaDeComentarios();
-void pruebaDePelicula();
+//void cargarDatosDePrueba();
+//void pruebaDeCinesYSalas();
+//void pruebaDeComentarios();
+//void pruebaDePelicula();
 
 #include "interfazGrafica.h"
 
 
 int main(){
+    ISistema *system = Fabrica::crearSistema();
     try {
-        interfazGrafica();
+        interfazGrafica(system);
     } catch (invalid_argument &ia) {
         mostrarError(ia.what());
     }
@@ -34,6 +35,7 @@ int main(){
     return 0;
 }
 
+/*
 void cargarDatosDePrueba(){
     // crea el diccionario de usuarios
     users = new OrderedDictionary();
@@ -60,6 +62,8 @@ void cargarDatosDePrueba(){
     u3->vincularNuevaPuntuacion(p4);
     u3->vincularNuevaPuntuacion(p5);
 }
+*/
+/*
 void pruebaDeCinesYSalas(){
 
     IDictionary *colCines = new OrderedDictionary;
@@ -100,6 +104,8 @@ void pruebaDeCinesYSalas(){
         it->next();
     }
 }
+*/
+/*
 void pruebaDeComentarios(){
     Usuario *u = new Usuario("usuario-1","", "", false);
     Comentario* c1 = new Comentario(Comentario::getNuevoID(), "hola 1", 0, u);
@@ -122,12 +128,12 @@ void pruebaDeComentarios(){
     while (it->hasCurrent()) {
         DtComentario *dtc = (DtComentario*) it->getCurrent();
         cout << *dtc << endl;
-        /*
-        for (int i = 0; i < dtc->getNivelSubComentario(); i++){
-            printf("\t");
-        }
-        cout << "id: " << dtc->getID() << ", texto: " << dtc->getTexto() << endl;
-        */
+
+        //for (int i = 0; i < dtc->getNivelSubComentario(); i++){
+        //    printf("\t");
+        //}
+        //cout << "id: " << dtc->getID() << ", texto: " << dtc->getTexto() << endl;
+
         it->next();
     }
 
@@ -137,6 +143,8 @@ void pruebaDeComentarios(){
     delete  c1;
 
 }
+*/
+/*
 void pruebaDePelicula(){
     cout << "#### creando peliculas y agregando a diccionario" << endl;
     IDictionary *colP = new OrderedDictionary();
@@ -226,20 +234,6 @@ void pruebaDePelicula(){
     Funcion *f5 = p2->crearFuncion(new DateTime(5,2,2003,4,5),100,c2);
     Funcion *f6 = p3->crearFuncion(new DateTime(6,2,2003,4,5),100,c3);
 
-    /*
-    ICollection *colSalas = c3->listarSalas();
-    IIterator *salasIT = colSalas->getIterator();
-    while (salasIT->hasCurrent()) {
-        DtSala* s = (DtSala*) salasIT->getCurrent();
-        cout << "------" << endl;
-        cout << *s << endl;
-        salasIT->next();
-    }
-    */
-
-
-
-
     cout << endl << endl;
     cout << *c1->obtenerSala(1)->getDataType() << endl;
     cout << *c1->obtenerSala(2)->getDataType() << endl;
@@ -304,4 +298,4 @@ void pruebaDePelicula(){
     p1->eiminarLinks();
 
 }
-
+*/
