@@ -1,7 +1,8 @@
 # iCinema
 
-** Tecnólogo en informática - UTEC **
-** Programación Avanzada - 2019 **
+**Tecnólogo en informática - UTEC**
+
+**Programación Avanzada - 2019**
 
 ## 
 ### Laboratorio 1
