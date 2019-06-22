@@ -1,16 +1,16 @@
 #ifndef ISISTEMA_H
 #define ISISTEMA_H
 #include <iostream>
-#include "datatypes/h/DtCine.h"
-#include "datatypes/h/DtReserva.h"
-#include "datatypes/h/DtFuncion.h"
-#include "datatypes/h/DtReservaCredito.h"
-#include "datatypes/h/DtReservaDebito.h"
-#include "datatypes/h/DtPelicula.h"
-#include "datatypes/h/DateTime.h"
-#include "datatypes/h/Direccion.h"
-#include "colecciones/interfaces/ICollection.h"
-#include "colecciones/interfaces/IDictionary.h"
+#include "../../datatypes/h/DtCine.h"
+#include "../../datatypes/h/DtReserva.h"
+#include "../../datatypes/h/DtFuncion.h"
+#include "../../datatypes/h/DtReservaCredito.h"
+#include "../../datatypes/h/DtReservaDebito.h"
+#include "../../datatypes/h/DtPelicula.h"
+#include "../../datatypes/h/DateTime.h"
+#include "../../datatypes/h/Direccion.h"
+#include "../../colecciones/interfaces/ICollection.h"
+#include "../../colecciones/interfaces/IDictionary.h"
 
 using namespace std;
 

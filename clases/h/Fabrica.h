@@ -1,7 +1,7 @@
 #ifndef CLASESHABRICA_H
 #define CLASESHABRICA_H
-#include "clases/h/Sistema.h"
-#include "clases/h/ISistema.h"
+#include "../h/Sistema.h"
+#include "../h/ISistema.h"
 
 //Clase Fabrica (Singleton)
 

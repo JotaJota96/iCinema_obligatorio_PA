@@ -596,20 +596,13 @@ void comentarPelicula(){
         //listar comentarios
         ICollection *colComentarios = sis->listarComentarios();
         it = colComentarios ->getIterator();
-        if (!colComentarios->isEmpty()){
-            while(it->hasCurrent()){
-                cout << *(dynamic_cast<DtComentario*>(it->getCurrent())) << endl;
-                it->next();
-            }
-            mostrarTitulo("-");
-            delete it;
-            delete colComentarios;
-        }else{
-            cout << "No hay elementos en la lista" << endl;
-            mostrarTitulo("-");
-            pausa();
-            return;
+        while(it->hasCurrent()){
+            cout << *(dynamic_cast<DtComentario*>(it->getCurrent())) << endl;
+            it->next();
         }
+        mostrarTitulo("-");
+        delete it;
+        delete colComentarios;
 
 
         // el usuario debe elegir si quiere comentar la pelicula o comentar un comentario

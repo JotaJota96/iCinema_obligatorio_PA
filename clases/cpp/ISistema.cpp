@@ -1,3 +1,3 @@
-#include "clases/h/ISistema.h"
+#include "../h/ISistema.h"
 
 ISistema::~ISistema(){} //Destructor

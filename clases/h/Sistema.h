@@ -6,8 +6,8 @@
 #include "Pelicula.h"
 #include "Funcion.h"
 #include "Sala.h"
-#include "colecciones/collections/OrderedDictionary.h"
-#include "colecciones/collections/List.h"
+#include "../../colecciones/collections/OrderedDictionary.h"
+#include "../../colecciones/collections/List.h"
 
 #include <map>
 class Pelicula;

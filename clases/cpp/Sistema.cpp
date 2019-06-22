@@ -1,5 +1,6 @@
-#include "clases/h/Sistema.h"
-#include "clases/h/ISistema.h"
+#include "../h/Sistema.h"
+#include "../h/ISistema.h"
+#include <stdexcept>
 
 Sistema * Sistema::instancia = 0;
 

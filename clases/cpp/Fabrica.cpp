@@ -1,5 +1,5 @@
-#include "clases/h/Fabrica.h"
-#include "clases/h/Sistema.h"
+#include "../h/Fabrica.h"
+#include "../h/Sistema.h"
 
 Fabrica::Fabrica(){ //Constructor
 
